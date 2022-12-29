@@ -364,7 +364,7 @@ char mudarNome(void)
     do
     {
         printf("Voce deseja mudar o nome dos jogadores (S/s | N/n)? ");
-        opcao = getchar();
+        scanf(" %c", &opcao);
         puts("");
         switch(opcao)
         {
