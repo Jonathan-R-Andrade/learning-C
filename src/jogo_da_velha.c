@@ -317,8 +317,7 @@ void pegarNome(void)
     do
     {
         printf("Informe o nome do jogador 1: ");
-        fflush(stdin);
-        gets(jogador[0]);
+        scanf("%s", jogador[0]);
         puts("");
         int tamanho = (int) strlen(jogador[0]);
         if(tamanho < 21 && tamanho > 0)
@@ -334,8 +333,7 @@ void pegarNome(void)
     do
     {
         printf("Informe o nome do jogador 2: ");
-        fflush(stdin);
-        gets(jogador[1]);
+        scanf("%s", jogador[1]);
         puts("");
         int tamanho = (int) strlen(jogador[1]);
         if(tamanho < 21 && tamanho > 0)
@@ -349,8 +347,6 @@ void pegarNome(void)
         }
     }
     while(continuar != 'n');
-    strupr(jogador[0]);
-    strupr(jogador[1]);
 }
 
 void asterisco(char jogador[22])
@@ -368,7 +364,6 @@ char mudarNome(void)
     do
     {
         printf("Voce deseja mudar o nome dos jogadores (S/s | N/n)? ");
-        fflush(stdin);
         opcao = getchar();
         puts("");
         switch(opcao)
