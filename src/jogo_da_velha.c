@@ -8,7 +8,7 @@ char *ast;
 void exibirTabuleiro(char tabuleiro[][3]);
 void jogar(void);
 void limparTerminal(void);
-void pegarNome(void);
+void pegarNomeDoJogador(int indiceDoJogador);
 void asterisco(char jogador[22]);
 char mudarNome(void);
 int menu(void);
@@ -28,7 +28,8 @@ int main(void)
         {
             if(nome == 's')
             {
-                pegarNome();
+                pegarNomeDoJogador(0);
+                pegarNomeDoJogador(1);
             }
             jogar();
             continuar = menu();
@@ -311,38 +312,21 @@ int menu(void)
     while (1);
 }
 
-void pegarNome(void)
+void pegarNomeDoJogador(int indiceDoJogador)
 {
     char continuar = 's';
     do
     {
-        printf("Informe o nome do jogador 1: ");
-        scanf("%s", jogador[0]);
+        printf("Informe o nome do jogador %d: ", indiceDoJogador+1);
+        scanf("%s", jogador[indiceDoJogador]);
         puts("");
-        int tamanho = (int) strlen(jogador[0]);
+        int tamanho = (int) strlen(jogador[indiceDoJogador]);
         if(tamanho < 21 && tamanho > 0)
         {
             continuar = 'n';
         }
         else
         {
-            puts("Por favor informe um nome com 1 ate 20 caractes.\n");
-        }
-    }
-    while(continuar != 'n');
-    do
-    {
-        printf("Informe o nome do jogador 2: ");
-        scanf("%s", jogador[1]);
-        puts("");
-        int tamanho = (int) strlen(jogador[1]);
-        if(tamanho < 21 && tamanho > 0)
-        {
-            continuar = 'n';
-        }
-        else
-        {
-            continuar = 's';
             puts("Por favor informe um nome com 1 ate 20 caractes.\n");
         }
     }
