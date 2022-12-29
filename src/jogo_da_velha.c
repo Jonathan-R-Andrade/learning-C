@@ -26,18 +26,17 @@ int main(void)
     {
         while (continuar)
         {
-            if(nome == 's')
+            if (nome == 's')
             {
                 pegarNomeDoJogador(0);
                 pegarNomeDoJogador(1);
             }
             jogar();
             continuar = menu();
-            if(continuar)
+            if (continuar)
                 nome = mudarNome();
         }
-    }
-    while(continuar);
+    } while (continuar);
     free(ast);
     return 0;
 }
@@ -64,11 +63,10 @@ void exibirTabuleiro(char tabuleiro[][3])
 void jogar(void)
 {
 
-    char tabuleiro[3][3] =
-    {
+    char tabuleiro[3][3] = {
         {' ', ' ', ' '},
         {' ', ' ', ' '},
-        {' ', ' ', ' '}
+        {' ', ' ', ' '},
     };
 
     int continuar = 1;
@@ -126,8 +124,7 @@ int jogada(char tabuleiro[][3], int vez)
         {
             return 0;
         }
-    }
-    while (continuar);
+    } while (continuar);
     return 1;
 }
 
@@ -181,18 +178,18 @@ int verificaLinha(char tabuleiro[][3])
                 {
                     exibirTabuleiro(tabuleiro);
                     asterisco(jogador[0]);
-                    printf("%s\n",ast);
+                    printf("%s\n", ast);
                     printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[0]);
-                    printf("%s\n\n",ast);
+                    printf("%s\n\n", ast);
                     return 0;
                 }
                 if (tabuleiro[linha][0] == 'O')
                 {
                     exibirTabuleiro(tabuleiro);
                     asterisco(jogador[1]);
-                    printf("%s\n",ast);
+                    printf("%s\n", ast);
                     printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[1]);
-                    printf("%s\n\n",ast);
+                    printf("%s\n\n", ast);
                     return 0;
                 }
             }
@@ -214,18 +211,18 @@ int verificaColuna(char tabuleiro[][3])
                 {
                     exibirTabuleiro(tabuleiro);
                     asterisco(jogador[0]);
-                    printf("%s\n",ast);
+                    printf("%s\n", ast);
                     printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[0]);
-                    printf("%s\n\n",ast);
+                    printf("%s\n\n", ast);
                     return 0;
                 }
                 if (tabuleiro[0][coluna] == 'O')
                 {
                     exibirTabuleiro(tabuleiro);
                     asterisco(jogador[1]);
-                    printf("%s\n",ast);
+                    printf("%s\n", ast);
                     printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[1]);
-                    printf("%s\n\n",ast);
+                    printf("%s\n\n", ast);
                     return 0;
                 }
             }
@@ -244,18 +241,18 @@ int verificaDiagonal(char tabuleiro[][3])
             {
                 exibirTabuleiro(tabuleiro);
                 asterisco(jogador[0]);
-                printf("%s\n",ast);
+                printf("%s\n", ast);
                 printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[0]);
-                printf("%s\n\n",ast);
+                printf("%s\n\n", ast);
                 return 0;
             }
             if (tabuleiro[0][0] == 'O')
             {
                 exibirTabuleiro(tabuleiro);
                 asterisco(jogador[1]);
-                printf("%s\n",ast);
+                printf("%s\n", ast);
                 printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[1]);
-                printf("%s\n\n",ast);
+                printf("%s\n\n", ast);
                 return 0;
             }
         }
@@ -268,18 +265,18 @@ int verificaDiagonal(char tabuleiro[][3])
             {
                 exibirTabuleiro(tabuleiro);
                 asterisco(jogador[0]);
-                printf("%s\n",ast);
+                printf("%s\n", ast);
                 printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[0]);
-                printf("%s\n\n",ast);
+                printf("%s\n\n", ast);
                 return 0;
             }
             if (tabuleiro[0][2] == 'O')
             {
                 exibirTabuleiro(tabuleiro);
                 asterisco(jogador[1]);
-                printf("%s\n",ast);
+                printf("%s\n", ast);
                 printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[1]);
-                printf("%s\n\n",ast);
+                printf("%s\n\n", ast);
                 return 0;
             }
         }
@@ -308,8 +305,7 @@ int menu(void)
             limparTerminal();
             printf("Opcao invalida.\n\n");
         }
-    }
-    while (1);
+    } while (1);
 }
 
 void pegarNomeDoJogador(int indiceDoJogador)
@@ -317,11 +313,11 @@ void pegarNomeDoJogador(int indiceDoJogador)
     char continuar = 's';
     do
     {
-        printf("Informe o nome do jogador %d: ", indiceDoJogador+1);
+        printf("Informe o nome do jogador %d: ", indiceDoJogador + 1);
         scanf("%s", jogador[indiceDoJogador]);
         puts("");
-        int tamanho = (int) strlen(jogador[indiceDoJogador]);
-        if(tamanho < 21 && tamanho > 0)
+        int tamanho = (int)strlen(jogador[indiceDoJogador]);
+        if (tamanho < 21 && tamanho > 0)
         {
             continuar = 'n';
         }
@@ -329,14 +325,13 @@ void pegarNomeDoJogador(int indiceDoJogador)
         {
             puts("Por favor informe um nome com 1 ate 20 caractes.\n");
         }
-    }
-    while(continuar != 'n');
+    } while (continuar != 'n');
 }
 
 void asterisco(char jogador[22])
 {
     ast = malloc(48 * sizeof(char));
-    int tamanho = strlen(jogador)+27;
+    int tamanho = strlen(jogador) + 27;
     memset(ast, '*', tamanho);
     ast[tamanho] = '\0';
 }
@@ -350,7 +345,7 @@ char mudarNome(void)
         printf("Voce deseja mudar o nome dos jogadores (S/s | N/n)? ");
         scanf(" %c", &opcao);
         puts("");
-        switch(opcao)
+        switch (opcao)
         {
         case 'S':
             continuar = 0;
@@ -372,8 +367,7 @@ char mudarNome(void)
             printf("Por favor escolha \"S/s\" para sim e \"N/n\" para nao.\n\n");
             continuar = 1;
         }
-    }
-    while(continuar);
+    } while (continuar);
     return resposta;
 }
 
