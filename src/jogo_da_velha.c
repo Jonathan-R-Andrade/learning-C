@@ -10,6 +10,7 @@ void jogar(void);
 void limparTerminal(void);
 void pegarNomeDoJogador(int indiceDoJogador);
 void asterisco(char jogador[22]);
+void imprimirVencedor(int indiceDoJogador);
 char mudarNome(void);
 int menu(void);
 int jogada(char tabuleiro[][3], int jogador);
@@ -62,7 +63,6 @@ void exibirTabuleiro(char tabuleiro[][3])
 
 void jogar(void)
 {
-
     char tabuleiro[3][3] = {
         {' ', ' ', ' '},
         {' ', ' ', ' '},
@@ -128,6 +128,14 @@ int jogada(char tabuleiro[][3], int vez)
     return 1;
 }
 
+void imprimirVencedor(int indiceDoJogador)
+{
+    asterisco(jogador[indiceDoJogador]);
+    printf("%s\n", ast);
+    printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[indiceDoJogador]);
+    printf("%s\n\n", ast);
+}
+
 int verificarPosicao(char tabuleiro[][3], int linha, int coluna, int vez)
 {
     if (linha >= 0 && linha <= 2 && coluna >= 0 && coluna <= 2)
@@ -174,19 +182,13 @@ int verificarLinha(char tabuleiro[][3])
             if (tabuleiro[linha][0] == 'X')
             {
                 exibirTabuleiro(tabuleiro);
-                asterisco(jogador[0]);
-                printf("%s\n", ast);
-                printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[0]);
-                printf("%s\n\n", ast);
+                imprimirVencedor(0);
                 return 0;
             }
             if (tabuleiro[linha][0] == 'O')
             {
                 exibirTabuleiro(tabuleiro);
-                asterisco(jogador[1]);
-                printf("%s\n", ast);
-                printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[1]);
-                printf("%s\n\n", ast);
+                imprimirVencedor(1);
                 return 0;
             }
         }
@@ -203,19 +205,13 @@ int verificarColuna(char tabuleiro[][3])
             if (tabuleiro[0][coluna] == 'X')
             {
                 exibirTabuleiro(tabuleiro);
-                asterisco(jogador[0]);
-                printf("%s\n", ast);
-                printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[0]);
-                printf("%s\n\n", ast);
+                imprimirVencedor(0);
                 return 0;
             }
             if (tabuleiro[0][coluna] == 'O')
             {
                 exibirTabuleiro(tabuleiro);
-                asterisco(jogador[1]);
-                printf("%s\n", ast);
-                printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[1]);
-                printf("%s\n\n", ast);
+                imprimirVencedor(1);
                 return 0;
             }
         }
@@ -230,19 +226,13 @@ int verificarDiagonal(char tabuleiro[][3])
         if (tabuleiro[0][0] == 'X')
         {
             exibirTabuleiro(tabuleiro);
-            asterisco(jogador[0]);
-            printf("%s\n", ast);
-            printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[0]);
-            printf("%s\n\n", ast);
+            imprimirVencedor(0);
             return 0;
         }
         if (tabuleiro[0][0] == 'O')
         {
             exibirTabuleiro(tabuleiro);
-            asterisco(jogador[1]);
-            printf("%s\n", ast);
-            printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[1]);
-            printf("%s\n\n", ast);
+            imprimirVencedor(1);
             return 0;
         }
     }
@@ -251,19 +241,13 @@ int verificarDiagonal(char tabuleiro[][3])
         if (tabuleiro[0][2] == 'X')
         {
             exibirTabuleiro(tabuleiro);
-            asterisco(jogador[0]);
-            printf("%s\n", ast);
-            printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[0]);
-            printf("%s\n\n", ast);
+            imprimirVencedor(0);
             return 0;
         }
         if (tabuleiro[0][2] == 'O')
         {
             exibirTabuleiro(tabuleiro);
-            asterisco(jogador[1]);
-            printf("%s\n", ast);
-            printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[1]);
-            printf("%s\n\n", ast);
+            imprimirVencedor(1);
             return 0;
         }
     }
