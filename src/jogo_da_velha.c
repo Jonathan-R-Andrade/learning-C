@@ -2,15 +2,16 @@
 #include <string.h>
 #include <stdlib.h>
 
-char jogador[2][22];
-char *ast;
+char jogador[2][21];
+char asteriscos[48];
 
 void exibirTabuleiro(char tabuleiro[][3]);
 void jogar(void);
 void limparTerminal(void);
 void pegarNomeDoJogador(int indiceDoJogador);
-void asterisco(char jogador[22]);
+void gerarAsteriscos(int tamanhoDoNomeDoJogador);
 void imprimirVencedor(int indiceDoJogador);
+void limparEntradaPadrao(void);
 char mudarNome(void);
 int menu(void);
 int jogada(char tabuleiro[][3], int jogador);
@@ -38,7 +39,6 @@ int main(void)
                 nome = mudarNome();
         }
     } while (continuar);
-    free(ast);
     return 0;
 }
 
@@ -130,10 +130,11 @@ int jogada(char tabuleiro[][3], int vez)
 
 void imprimirVencedor(int indiceDoJogador)
 {
-    asterisco(jogador[indiceDoJogador]);
-    printf("%s\n", ast);
+    char *nomeDoJogador = jogador[indiceDoJogador];
+    gerarAsteriscos(strlen(nomeDoJogador));
+    printf("%s\n", asteriscos);
     printf("* PARABENS %s, VOCE VENCEU! *\n", jogador[indiceDoJogador]);
-    printf("%s\n\n", ast);
+    printf("%s\n\n", asteriscos);
 }
 
 int verificarPosicao(char tabuleiro[][3], int linha, int coluna, int vez)
@@ -280,30 +281,32 @@ int menu(void)
 
 void pegarNomeDoJogador(int indiceDoJogador)
 {
-    char continuar = 's';
+    char *nome_do_jogador = jogador[indiceDoJogador];
+    char pegar_nome = 1;
     do
     {
         printf("Informe o nome do jogador %d: ", indiceDoJogador + 1);
-        scanf("%s", jogador[indiceDoJogador]);
+        scanf(" %20[^\n]", nome_do_jogador);
+        limparEntradaPadrao();
         puts("");
-        int tamanho = (int)strlen(jogador[indiceDoJogador]);
-        if (tamanho < 21 && tamanho > 0)
+        int tamanho_do_nome = (int)strlen(nome_do_jogador);
+        if (tamanho_do_nome > 2)
         {
-            continuar = 'n';
+            pegar_nome = 0;
         }
         else
         {
-            puts("Por favor informe um nome com 1 ate 20 caractes.\n");
+            puts("O nome do jogador deve ter no mínimo três caracteres.\n");
         }
-    } while (continuar != 'n');
+    } while (pegar_nome);
 }
 
-void asterisco(char jogador[22])
+void gerarAsteriscos(int tamanhoDoNomeDoJogador)
 {
-    ast = malloc(48 * sizeof(char));
-    int tamanho = strlen(jogador) + 27;
-    memset(ast, '*', tamanho);
-    ast[tamanho] = '\0';
+    int minimo = 28; // Tamanho do texto do vencedor mais o caractere nulo
+    int total = minimo + tamanhoDoNomeDoJogador;
+    memset(asteriscos, '*', total);
+    asteriscos[total - 1] = '\0';
 }
 
 char mudarNome(void)
@@ -348,4 +351,12 @@ void limparTerminal(void)
     {
         printf("\n");
     }
+}
+
+void limparEntradaPadrao()
+{
+    char c;
+    while ((c = getchar()) != '\n' && c != EOF)
+    {
+    };
 }
