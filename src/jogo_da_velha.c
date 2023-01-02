@@ -5,39 +5,6 @@
 char nomes_dos_jogadores[2][21];
 char asteriscos[48];
 
-void exibir_tabuleiro(char tabuleiro[][3]);
-void jogar();
-void limpar_terminal();
-void pegar_nome_do_jogador(int indice_do_jogador);
-void gerar_asteriscos(int tamanho_nome_jogador);
-void imprimir_vencedor(int indice_do_jogador);
-void limpar_entrada_padrao();
-int menu();
-int jogada(char tabuleiro[][3], int jogador);
-int verificar_posicao(char tabuleiro[][3], int linha, int coluna, int jogador);
-int verificar_linha(char tabuleiro[][3]);
-int verificar_coluna(char tabuleiro[][3]);
-int verificar_diagonal(char tabuleiro[][3]);
-
-int main(void)
-{
-    int continuar = menu();
-
-    if (continuar == 0)
-        return 0;
-
-    pegar_nome_do_jogador(0);
-    pegar_nome_do_jogador(1);
-
-    while (continuar)
-    {
-        jogar();
-        continuar = menu();
-    }
-
-    return 0;
-}
-
 void exibir_tabuleiro(char tabuleiro[][3])
 {
     printf("\n        1   2   3\n\n"
@@ -57,71 +24,29 @@ void exibir_tabuleiro(char tabuleiro[][3])
            tabuleiro[2][2]);
 }
 
-void jogar(void)
+void limpar_terminal(void)
 {
-    char tabuleiro[3][3] = {
-        {' ', ' ', ' '},
-        {' ', ' ', ' '},
-        {' ', ' ', ' '},
-    };
-
-    int continuar = 1;
     int i;
-    for (i = 0; i < 9; i++)
+    for (i = 1; i < 101; i++)
     {
-        if (i % 2 == 0)
-        {
-            continuar = jogada(tabuleiro, (i % 2));
-        }
-        else
-        {
-            continuar = jogada(tabuleiro, (i % 2));
-        }
-        if (continuar == 0)
-        {
-            break;
-        }
-        if (i == 8)
-        {
-            exibir_tabuleiro(tabuleiro);
-            printf("***********************\n"
-                   "* EMPATE, FIM DE JOGO *\n"
-                   "***********************\n\n");
-        }
+        printf("\n");
     }
 }
 
-int jogada(char tabuleiro[][3], int vez)
+void limpar_entrada_padrao()
 {
-    int continuar = 1, linha, coluna, termino = 1;
-    exibir_tabuleiro(tabuleiro);
-    printf("-> SUA VEZ %s\n\n", nomes_dos_jogadores[vez]);
-    do
+    char c;
+    while ((c = getchar()) != '\n' && c != EOF)
     {
-        printf("Informe uma linha: ");
-        scanf("%d", &linha);
-        printf("Informe uma coluna: ");
-        scanf("%d", &coluna);
-        linha--;
-        coluna--;
-        continuar = verificar_posicao(tabuleiro, linha, coluna, vez);
-        termino = verificar_linha(tabuleiro);
-        if (termino == 0)
-        {
-            return 0;
-        }
-        termino = verificar_coluna(tabuleiro);
-        if (termino == 0)
-        {
-            return 0;
-        }
-        termino = verificar_diagonal(tabuleiro);
-        if (termino == 0)
-        {
-            return 0;
-        }
-    } while (continuar);
-    return 1;
+    };
+}
+
+void gerar_asteriscos(int tamanho_nome_jogador)
+{
+    int minimo = 28; // Tamanho do texto do vencedor mais o caractere nulo
+    int total = minimo + tamanho_nome_jogador;
+    memset(asteriscos, '*', total);
+    asteriscos[total - 1] = '\0';
 }
 
 void imprimir_vencedor(int indice_do_jogador)
@@ -251,6 +176,73 @@ int verificar_diagonal(char tabuleiro[][3])
     return 1;
 }
 
+int jogada(char tabuleiro[][3], int vez)
+{
+    int continuar = 1, linha, coluna, termino = 1;
+    exibir_tabuleiro(tabuleiro);
+    printf("-> SUA VEZ %s\n\n", nomes_dos_jogadores[vez]);
+    do
+    {
+        printf("Informe uma linha: ");
+        scanf("%d", &linha);
+        printf("Informe uma coluna: ");
+        scanf("%d", &coluna);
+        linha--;
+        coluna--;
+        continuar = verificar_posicao(tabuleiro, linha, coluna, vez);
+        termino = verificar_linha(tabuleiro);
+        if (termino == 0)
+        {
+            return 0;
+        }
+        termino = verificar_coluna(tabuleiro);
+        if (termino == 0)
+        {
+            return 0;
+        }
+        termino = verificar_diagonal(tabuleiro);
+        if (termino == 0)
+        {
+            return 0;
+        }
+    } while (continuar);
+    return 1;
+}
+
+void jogar(void)
+{
+    char tabuleiro[3][3] = {
+        {' ', ' ', ' '},
+        {' ', ' ', ' '},
+        {' ', ' ', ' '},
+    };
+
+    int continuar = 1;
+    int i;
+    for (i = 0; i < 9; i++)
+    {
+        if (i % 2 == 0)
+        {
+            continuar = jogada(tabuleiro, (i % 2));
+        }
+        else
+        {
+            continuar = jogada(tabuleiro, (i % 2));
+        }
+        if (continuar == 0)
+        {
+            break;
+        }
+        if (i == 8)
+        {
+            exibir_tabuleiro(tabuleiro);
+            printf("***********************\n"
+                   "* EMPATE, FIM DE JOGO *\n"
+                   "***********************\n\n");
+        }
+    }
+}
+
 int menu(void)
 {
     int opcao;
@@ -297,27 +289,21 @@ void pegar_nome_do_jogador(int indice_do_jogador)
     } while (pegar_nome);
 }
 
-void gerar_asteriscos(int tamanho_nome_jogador)
+int main(void)
 {
-    int minimo = 28; // Tamanho do texto do vencedor mais o caractere nulo
-    int total = minimo + tamanho_nome_jogador;
-    memset(asteriscos, '*', total);
-    asteriscos[total - 1] = '\0';
-}
+    int continuar = menu();
 
-void limpar_terminal(void)
-{
-    int i;
-    for (i = 1; i < 101; i++)
+    if (continuar == 0)
+        return 0;
+
+    pegar_nome_do_jogador(0);
+    pegar_nome_do_jogador(1);
+
+    while (continuar)
     {
-        printf("\n");
+        jogar();
+        continuar = menu();
     }
-}
 
-void limpar_entrada_padrao()
-{
-    char c;
-    while ((c = getchar()) != '\n' && c != EOF)
-    {
-    };
+    return 0;
 }
