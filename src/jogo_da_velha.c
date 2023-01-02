@@ -8,9 +8,9 @@ char asteriscos[48];
 void exibir_tabuleiro(char tabuleiro[][3]);
 void jogar();
 void limpar_terminal();
-void pegar_nome_do_jogador(int indiceDoJogador);
-void gerar_asteriscos(int tamanhoDoNomeDoJogador);
-void imprimir_vencedor(int indiceDoJogador);
+void pegar_nome_do_jogador(int indice_do_jogador);
+void gerar_asteriscos(int tamanho_nome_jogador);
+void imprimir_vencedor(int indice_do_jogador);
 void limpar_entrada_padrao();
 char mudar_nome();
 int menu();
@@ -128,12 +128,12 @@ int jogada(char tabuleiro[][3], int vez)
     return 1;
 }
 
-void imprimir_vencedor(int indiceDoJogador)
+void imprimir_vencedor(int indice_do_jogador)
 {
-    char *nomeDoJogador = nomes_dos_jogadores[indiceDoJogador];
-    gerar_asteriscos(strlen(nomeDoJogador));
+    char *nome_do_jogador = nomes_dos_jogadores[indice_do_jogador];
+    gerar_asteriscos(strlen(nome_do_jogador));
     printf("%s\n", asteriscos);
-    printf("* PARABENS %s, VOCE VENCEU! *\n", nomes_dos_jogadores[indiceDoJogador]);
+    printf("* PARABENS %s, VOCE VENCEU! *\n", nomes_dos_jogadores[indice_do_jogador]);
     printf("%s\n\n", asteriscos);
 }
 
@@ -279,13 +279,13 @@ int menu(void)
     } while (1);
 }
 
-void pegar_nome_do_jogador(int indiceDoJogador)
+void pegar_nome_do_jogador(int indice_do_jogador)
 {
-    char *nome_do_jogador = nomes_dos_jogadores[indiceDoJogador];
+    char *nome_do_jogador = nomes_dos_jogadores[indice_do_jogador];
     char pegar_nome = 1;
     do
     {
-        printf("Informe o nome do jogador %d: ", indiceDoJogador + 1);
+        printf("Informe o nome do jogador %d: ", indice_do_jogador + 1);
         scanf(" %20[^\n]", nome_do_jogador);
         limpar_entrada_padrao();
         puts("");
@@ -301,10 +301,10 @@ void pegar_nome_do_jogador(int indiceDoJogador)
     } while (pegar_nome);
 }
 
-void gerar_asteriscos(int tamanhoDoNomeDoJogador)
+void gerar_asteriscos(int tamanho_nome_jogador)
 {
     int minimo = 28; // Tamanho do texto do vencedor mais o caractere nulo
-    int total = minimo + tamanhoDoNomeDoJogador;
+    int total = minimo + tamanho_nome_jogador;
     memset(asteriscos, '*', total);
     asteriscos[total - 1] = '\0';
 }
