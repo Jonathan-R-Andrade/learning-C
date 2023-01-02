@@ -12,7 +12,6 @@ void pegar_nome_do_jogador(int indice_do_jogador);
 void gerar_asteriscos(int tamanho_nome_jogador);
 void imprimir_vencedor(int indice_do_jogador);
 void limpar_entrada_padrao();
-char mudar_nome();
 int menu();
 int jogada(char tabuleiro[][3], int jogador);
 int verificar_posicao(char tabuleiro[][3], int linha, int coluna, int jogador);
@@ -22,23 +21,20 @@ int verificar_diagonal(char tabuleiro[][3]);
 
 int main(void)
 {
-    char nome = 's';
     int continuar = menu();
-    do
+
+    if (continuar == 0)
+        return 0;
+
+    pegar_nome_do_jogador(0);
+    pegar_nome_do_jogador(1);
+
+    while (continuar)
     {
-        while (continuar)
-        {
-            if (nome == 's')
-            {
-                pegar_nome_do_jogador(0);
-                pegar_nome_do_jogador(1);
-            }
-            jogar();
-            continuar = menu();
-            if (continuar)
-                nome = mudar_nome();
-        }
-    } while (continuar);
+        jogar();
+        continuar = menu();
+    }
+
     return 0;
 }
 
@@ -307,41 +303,6 @@ void gerar_asteriscos(int tamanho_nome_jogador)
     int total = minimo + tamanho_nome_jogador;
     memset(asteriscos, '*', total);
     asteriscos[total - 1] = '\0';
-}
-
-char mudar_nome(void)
-{
-    char opcao, resposta;
-    int continuar;
-    do
-    {
-        printf("Voce deseja mudar o nome dos jogadores (S/s | N/n)? ");
-        scanf(" %c", &opcao);
-        puts("");
-        switch (opcao)
-        {
-        case 'S':
-            continuar = 0;
-            resposta = 's';
-            break;
-        case 's':
-            continuar = 0;
-            resposta = 's';
-            break;
-        case 'N':
-            continuar = 0;
-            resposta = 'n';
-            break;
-        case 'n':
-            continuar = 0;
-            resposta = 'n';
-            break;
-        default:
-            printf("Por favor escolha \"S/s\" para sim e \"N/n\" para nao.\n\n");
-            continuar = 1;
-        }
-    } while (continuar);
-    return resposta;
 }
 
 void limpar_terminal(void)
