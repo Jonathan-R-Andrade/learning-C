@@ -174,11 +174,11 @@ int verificar_diagonal(char tabuleiro[][3])
     return 1;
 }
 
-int jogada(char tabuleiro[][3], int vez)
+int jogar(char tabuleiro[][3], int indice_do_jogador)
 {
     int continuar = 1, linha, coluna, termino = 1;
     exibir_tabuleiro(tabuleiro);
-    printf("-> SUA VEZ %s\n\n", nomes_dos_jogadores[vez]);
+    printf("-> SUA VEZ %s\n\n", nomes_dos_jogadores[indice_do_jogador]);
     do
     {
         printf("Informe uma linha: ");
@@ -187,7 +187,7 @@ int jogada(char tabuleiro[][3], int vez)
         scanf("%d", &coluna);
         linha--;
         coluna--;
-        continuar = verificar_posicao(tabuleiro, linha, coluna, vez);
+        continuar = verificar_posicao(tabuleiro, linha, coluna, indice_do_jogador);
         termino = verificar_linha(tabuleiro);
         if (termino == 0)
         {
@@ -207,7 +207,7 @@ int jogada(char tabuleiro[][3], int vez)
     return 1;
 }
 
-void jogar(void)
+void iniciar_partida(void)
 {
     char tabuleiro[3][3] = {
         {' ', ' ', ' '},
@@ -221,11 +221,11 @@ void jogar(void)
     {
         if (i % 2 == 0)
         {
-            continuar = jogada(tabuleiro, (i % 2));
+            continuar = jogar(tabuleiro, 0);
         }
         else
         {
-            continuar = jogada(tabuleiro, (i % 2));
+            continuar = jogar(tabuleiro, 1);
         }
         if (continuar == 0)
         {
@@ -299,7 +299,7 @@ int main(void)
 
     while (continuar)
     {
-        jogar();
+        iniciar_partida();
         continuar = menu();
     }
 
