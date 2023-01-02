@@ -6,19 +6,19 @@ char nomes_dos_jogadores[2][21];
 char asteriscos[48];
 
 void exibir_tabuleiro(char tabuleiro[][3]);
-void jogar(void);
-void limpar_terminal(void);
+void jogar();
+void limpar_terminal();
 void pegar_nome_do_jogador(int indiceDoJogador);
 void gerar_asteriscos(int tamanhoDoNomeDoJogador);
 void imprimir_vencedor(int indiceDoJogador);
-void limpar_entrada_padrao(void);
-char mudarNome(void);
-int menu(void);
+void limpar_entrada_padrao();
+char mudar_nome();
+int menu();
 int jogada(char tabuleiro[][3], int jogador);
-int verificarPosicao(char tabuleiro[][3], int linha, int coluna, int jogador);
-int verificarLinha(char tabuleiro[][3]);
-int verificarColuna(char tabuleiro[][3]);
-int verificarDiagonal(char tabuleiro[][3]);
+int verificar_posicao(char tabuleiro[][3], int linha, int coluna, int jogador);
+int verificar_linha(char tabuleiro[][3]);
+int verificar_coluna(char tabuleiro[][3]);
+int verificar_diagonal(char tabuleiro[][3]);
 
 int main(void)
 {
@@ -36,7 +36,7 @@ int main(void)
             jogar();
             continuar = menu();
             if (continuar)
-                nome = mudarNome();
+                nome = mudar_nome();
         }
     } while (continuar);
     return 0;
@@ -108,18 +108,18 @@ int jogada(char tabuleiro[][3], int vez)
         scanf("%d", &coluna);
         linha--;
         coluna--;
-        continuar = verificarPosicao(tabuleiro, linha, coluna, vez);
-        termino = verificarLinha(tabuleiro);
+        continuar = verificar_posicao(tabuleiro, linha, coluna, vez);
+        termino = verificar_linha(tabuleiro);
         if (termino == 0)
         {
             return 0;
         }
-        termino = verificarColuna(tabuleiro);
+        termino = verificar_coluna(tabuleiro);
         if (termino == 0)
         {
             return 0;
         }
-        termino = verificarDiagonal(tabuleiro);
+        termino = verificar_diagonal(tabuleiro);
         if (termino == 0)
         {
             return 0;
@@ -137,7 +137,7 @@ void imprimir_vencedor(int indiceDoJogador)
     printf("%s\n\n", asteriscos);
 }
 
-int verificarPosicao(char tabuleiro[][3], int linha, int coluna, int vez)
+int verificar_posicao(char tabuleiro[][3], int linha, int coluna, int vez)
 {
     if (linha >= 0 && linha <= 2 && coluna >= 0 && coluna <= 2)
     {
@@ -174,7 +174,7 @@ int verificarPosicao(char tabuleiro[][3], int linha, int coluna, int vez)
     return 1;
 }
 
-int verificarLinha(char tabuleiro[][3])
+int verificar_linha(char tabuleiro[][3])
 {
     for (int linha = 0; linha < 3; linha++)
     {
@@ -197,7 +197,7 @@ int verificarLinha(char tabuleiro[][3])
     return 1;
 }
 
-int verificarColuna(char tabuleiro[][3])
+int verificar_coluna(char tabuleiro[][3])
 {
     for (int coluna = 0; coluna < 3; coluna++)
     {
@@ -220,7 +220,7 @@ int verificarColuna(char tabuleiro[][3])
     return 1;
 }
 
-int verificarDiagonal(char tabuleiro[][3])
+int verificar_diagonal(char tabuleiro[][3])
 {
     if (tabuleiro[0][0] == tabuleiro[1][1] && tabuleiro[1][1] == tabuleiro[2][2])
     {
@@ -309,7 +309,7 @@ void gerar_asteriscos(int tamanhoDoNomeDoJogador)
     asteriscos[total - 1] = '\0';
 }
 
-char mudarNome(void)
+char mudar_nome(void)
 {
     char opcao, resposta;
     int continuar;
