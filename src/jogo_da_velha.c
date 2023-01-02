@@ -3,7 +3,6 @@
 #include <stdlib.h>
 
 char nomes_dos_jogadores[2][21];
-char asteriscos[48];
 
 void exibir_tabuleiro(char tabuleiro[][3])
 {
@@ -41,20 +40,19 @@ void limpar_entrada_padrao()
     };
 }
 
-void gerar_asteriscos(int tamanho_nome_jogador)
-{
-    int minimo = 28; // Tamanho do texto do vencedor mais o caractere nulo
-    int total = minimo + tamanho_nome_jogador;
-    memset(asteriscos, '*', total);
-    asteriscos[total - 1] = '\0';
-}
-
 void imprimir_vencedor(int indice_do_jogador)
 {
     char *nome_do_jogador = nomes_dos_jogadores[indice_do_jogador];
-    gerar_asteriscos(strlen(nome_do_jogador));
+    int tamanho_nome_jogador = (int)strlen(nome_do_jogador);
+    int tamanho_texto_vencedor = 27;
+    int total_de_asteriscos = tamanho_nome_jogador + tamanho_texto_vencedor;
+
+    char asteriscos[total_de_asteriscos + 1];
+    memset(asteriscos, '*', total_de_asteriscos);
+    asteriscos[total_de_asteriscos] = '\0';
+
     printf("%s\n", asteriscos);
-    printf("* PARABENS %s, VOCE VENCEU! *\n", nomes_dos_jogadores[indice_do_jogador]);
+    printf("* PARABÉNS %s, VOCÊ VENCEU! *\n", nomes_dos_jogadores[indice_do_jogador]);
     printf("%s\n\n", asteriscos);
 }
 
