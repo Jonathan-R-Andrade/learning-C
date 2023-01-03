@@ -23,13 +23,10 @@ void exibir_tabuleiro(char tabuleiro[][3])
            tabuleiro[2][2]);
 }
 
-void limpar_terminal(void)
+void limpar_terminal()
 {
-    int i;
-    for (i = 1; i < 101; i++)
-    {
+    for (int i = 0; i < 100; i++)
         printf("\n");
-    }
 }
 
 void limpar_entrada_padrao()
