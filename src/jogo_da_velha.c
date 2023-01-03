@@ -205,7 +205,7 @@ int jogar(char tabuleiro[][3], int indice_do_jogador)
     return 1;
 }
 
-void iniciar_partida(void)
+void iniciar_partida()
 {
     char tabuleiro[3][3] = {
         {' ', ' ', ' '},
@@ -239,7 +239,7 @@ void iniciar_partida(void)
     }
 }
 
-int menu(void)
+int menu()
 {
     int opcao;
     do
@@ -285,7 +285,7 @@ void pegar_nome_do_jogador(int indice_do_jogador)
     } while (pegar_nome);
 }
 
-int main(void)
+int main()
 {
     int continuar = menu();
 
