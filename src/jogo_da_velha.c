@@ -56,41 +56,16 @@ void imprimir_vencedor(int indice_do_jogador)
     printf("%s\n\n", asteriscos);
 }
 
-int verificar_posicao(char tabuleiro[][3], int linha, int coluna, int vez)
+int verificar_posicao(char tabuleiro[][3], int linha, int coluna)
 {
     if (linha >= 0 && linha <= 2 && coluna >= 0 && coluna <= 2)
     {
         if (tabuleiro[linha][coluna] == ' ')
-        {
-            char XO = ' ';
-            if (vez == 0)
-            {
-                XO = 'X';
-            }
-            else
-            {
-                XO = 'O';
-            }
-            tabuleiro[linha][coluna] = XO;
-            limpar_terminal();
-            return 0;
-        }
+            return 0; // Posição disponível
         else
-        {
-            limpar_terminal();
-            exibir_tabuleiro(tabuleiro);
-            printf("-> %s\n\n", nomes_dos_jogadores[vez]);
-            printf("Esse lugar ja esta ocupado, tente de novo.\n\n");
-        }
+            return 1; // A posição já foi escolhida
     }
-    else
-    {
-        limpar_terminal();
-        exibir_tabuleiro(tabuleiro);
-        printf("-> %s\n\n", nomes_dos_jogadores[vez]);
-        printf("Essa posicao nao existe, tente de novo.\n\n");
-    }
-    return 1;
+    return 2; // Posição inexistente
 }
 
 int verificar_linha(char tabuleiro[][3])
@@ -103,17 +78,17 @@ int verificar_linha(char tabuleiro[][3])
             {
                 exibir_tabuleiro(tabuleiro);
                 imprimir_vencedor(0);
-                return 0;
+                return 1;
             }
             if (tabuleiro[linha][0] == 'O')
             {
                 exibir_tabuleiro(tabuleiro);
                 imprimir_vencedor(1);
-                return 0;
+                return 1;
             }
         }
     }
-    return 1;
+    return 0;
 }
 
 int verificar_coluna(char tabuleiro[][3])
@@ -126,17 +101,17 @@ int verificar_coluna(char tabuleiro[][3])
             {
                 exibir_tabuleiro(tabuleiro);
                 imprimir_vencedor(0);
-                return 0;
+                return 1;
             }
             if (tabuleiro[0][coluna] == 'O')
             {
                 exibir_tabuleiro(tabuleiro);
                 imprimir_vencedor(1);
-                return 0;
+                return 1;
             }
         }
     }
-    return 1;
+    return 0;
 }
 
 int verificar_diagonal(char tabuleiro[][3])
@@ -147,13 +122,13 @@ int verificar_diagonal(char tabuleiro[][3])
         {
             exibir_tabuleiro(tabuleiro);
             imprimir_vencedor(0);
-            return 0;
+            return 1;
         }
         if (tabuleiro[0][0] == 'O')
         {
             exibir_tabuleiro(tabuleiro);
             imprimir_vencedor(1);
-            return 0;
+            return 1;
         }
     }
     else if (tabuleiro[0][2] == tabuleiro[1][1] && tabuleiro[1][1] == tabuleiro[2][0])
@@ -162,48 +137,71 @@ int verificar_diagonal(char tabuleiro[][3])
         {
             exibir_tabuleiro(tabuleiro);
             imprimir_vencedor(0);
-            return 0;
+            return 1;
         }
         if (tabuleiro[0][2] == 'O')
         {
             exibir_tabuleiro(tabuleiro);
             imprimir_vencedor(1);
-            return 0;
+            return 1;
         }
     }
-    return 1;
+    return 0;
 }
 
-int jogar(char tabuleiro[][3], int indice_do_jogador)
+void solicitar_posicao(char tabuleiro[][3], int indice_do_jogador)
 {
-    int continuar = 1, linha, coluna, termino = 1;
-    exibir_tabuleiro(tabuleiro);
-    printf("-> SUA VEZ %s\n\n", nomes_dos_jogadores[indice_do_jogador]);
+    int linha, coluna, erro = 0;
     do
     {
+        limpar_terminal();
+        exibir_tabuleiro(tabuleiro);
+        printf("-> SUA VEZ %s\n\n", nomes_dos_jogadores[indice_do_jogador]);
+
+        switch (erro)
+        {
+        case 1:
+            printf("Esse lugar já está ocupado, tente de novo.\n\n");
+            break;
+        case 2:
+            printf("Essa posição não existe, tente de novo.\n\n");
+            break;
+        }
+
         printf("Informe uma linha: ");
         scanf("%d", &linha);
         printf("Informe uma coluna: ");
         scanf("%d", &coluna);
+
         linha--;
         coluna--;
-        continuar = verificar_posicao(tabuleiro, linha, coluna, indice_do_jogador);
-        termino = verificar_linha(tabuleiro);
-        if (termino == 0)
-        {
-            return 0;
-        }
-        termino = verificar_coluna(tabuleiro);
-        if (termino == 0)
-        {
-            return 0;
-        }
-        termino = verificar_diagonal(tabuleiro);
-        if (termino == 0)
-        {
-            return 0;
-        }
-    } while (continuar);
+        erro = verificar_posicao(tabuleiro, linha, coluna);
+    } while (erro);
+
+    if (indice_do_jogador == 0)
+        tabuleiro[linha][coluna] = 'X';
+    else
+        tabuleiro[linha][coluna] = 'O';
+
+    limpar_terminal();
+}
+
+int jogar(char tabuleiro[][3], int indice_do_jogador)
+{
+    solicitar_posicao(tabuleiro, indice_do_jogador);
+
+    int fim_de_jogo = verificar_linha(tabuleiro);
+    if (fim_de_jogo)
+        return 0;
+
+    fim_de_jogo = verificar_coluna(tabuleiro);
+    if (fim_de_jogo)
+        return 0;
+
+    fim_de_jogo = verificar_diagonal(tabuleiro);
+    if (fim_de_jogo)
+        return 0;
+
     return 1;
 }
 
