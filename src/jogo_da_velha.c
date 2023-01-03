@@ -70,82 +70,87 @@ int verificar_posicao(char tabuleiro[][3], int linha, int coluna)
 
 int verificar_linha(char tabuleiro[][3])
 {
+    int indice_do_vencedor = -1;
+
     for (int linha = 0; linha < 3; linha++)
     {
         if (tabuleiro[linha][0] == tabuleiro[linha][1] && tabuleiro[linha][1] == tabuleiro[linha][2])
         {
             if (tabuleiro[linha][0] == 'X')
-            {
-                exibir_tabuleiro(tabuleiro);
-                imprimir_vencedor(0);
-                return 1;
-            }
+                indice_do_vencedor = 0;
+
             if (tabuleiro[linha][0] == 'O')
-            {
-                exibir_tabuleiro(tabuleiro);
-                imprimir_vencedor(1);
-                return 1;
-            }
+                indice_do_vencedor = 1;
         }
     }
+
+    if (indice_do_vencedor != -1)
+    {
+        limpar_terminal();
+        exibir_tabuleiro(tabuleiro);
+        imprimir_vencedor(indice_do_vencedor);
+        return 1;
+    }
+
     return 0;
 }
 
 int verificar_coluna(char tabuleiro[][3])
 {
+    int indice_do_vencedor = -1;
+
     for (int coluna = 0; coluna < 3; coluna++)
     {
         if (tabuleiro[0][coluna] == tabuleiro[1][coluna] && tabuleiro[1][coluna] == tabuleiro[2][coluna])
         {
             if (tabuleiro[0][coluna] == 'X')
-            {
-                exibir_tabuleiro(tabuleiro);
-                imprimir_vencedor(0);
-                return 1;
-            }
+                indice_do_vencedor = 0;
+
             if (tabuleiro[0][coluna] == 'O')
-            {
-                exibir_tabuleiro(tabuleiro);
-                imprimir_vencedor(1);
-                return 1;
-            }
+                indice_do_vencedor = 1;
         }
     }
+
+    if (indice_do_vencedor != -1)
+    {
+        limpar_terminal();
+        exibir_tabuleiro(tabuleiro);
+        imprimir_vencedor(indice_do_vencedor);
+        return 1;
+    }
+
     return 0;
 }
 
 int verificar_diagonal(char tabuleiro[][3])
 {
+    int indice_do_vencedor = -1;
+
     if (tabuleiro[0][0] == tabuleiro[1][1] && tabuleiro[1][1] == tabuleiro[2][2])
     {
         if (tabuleiro[0][0] == 'X')
-        {
-            exibir_tabuleiro(tabuleiro);
-            imprimir_vencedor(0);
-            return 1;
-        }
+            indice_do_vencedor = 0;
+
         if (tabuleiro[0][0] == 'O')
-        {
-            exibir_tabuleiro(tabuleiro);
-            imprimir_vencedor(1);
-            return 1;
-        }
+            indice_do_vencedor = 1;
     }
     else if (tabuleiro[0][2] == tabuleiro[1][1] && tabuleiro[1][1] == tabuleiro[2][0])
     {
         if (tabuleiro[0][2] == 'X')
-        {
-            exibir_tabuleiro(tabuleiro);
-            imprimir_vencedor(0);
-            return 1;
-        }
+            indice_do_vencedor = 0;
+
         if (tabuleiro[0][2] == 'O')
-        {
-            exibir_tabuleiro(tabuleiro);
-            imprimir_vencedor(1);
-            return 1;
-        }
+            indice_do_vencedor = 1;
     }
+
+    if (indice_do_vencedor != -1)
+    {
+        limpar_terminal();
+        exibir_tabuleiro(tabuleiro);
+        imprimir_vencedor(indice_do_vencedor);
+        return 1;
+    }
+
     return 0;
 }
 
@@ -182,8 +187,6 @@ void solicitar_posicao(char tabuleiro[][3], int indice_do_jogador)
         tabuleiro[linha][coluna] = 'X';
     else
         tabuleiro[linha][coluna] = 'O';
-
-    limpar_terminal();
 }
 
 int jogar(char tabuleiro[][3], int indice_do_jogador)
