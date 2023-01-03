@@ -192,17 +192,17 @@ int jogar(char tabuleiro[][3], int indice_do_jogador)
 
     int fim_de_jogo = verificar_linha(tabuleiro);
     if (fim_de_jogo)
-        return 0;
+        return 1;
 
     fim_de_jogo = verificar_coluna(tabuleiro);
     if (fim_de_jogo)
-        return 0;
+        return 1;
 
     fim_de_jogo = verificar_diagonal(tabuleiro);
     if (fim_de_jogo)
-        return 0;
+        return 1;
 
-    return 1;
+    return 0;
 }
 
 void iniciar_partida()
@@ -213,30 +213,21 @@ void iniciar_partida()
         {' ', ' ', ' '},
     };
 
-    int continuar = 1;
-    int i;
-    for (i = 0; i < 9; i++)
+    for (int i = 0; i < 9; i++)
     {
-        if (i % 2 == 0)
-        {
-            continuar = jogar(tabuleiro, 0);
-        }
-        else
-        {
-            continuar = jogar(tabuleiro, 1);
-        }
-        if (continuar == 0)
-        {
-            break;
-        }
-        if (i == 8)
-        {
-            exibir_tabuleiro(tabuleiro);
-            printf("***********************\n"
-                   "* EMPATE, FIM DE JOGO *\n"
-                   "***********************\n\n");
-        }
+        int indice_do_jogador = i % 2;
+
+        int fim_de_jogo = jogar(tabuleiro, indice_do_jogador);
+
+        if (fim_de_jogo)
+            return;
     }
+
+    limpar_terminal();
+    exibir_tabuleiro(tabuleiro);
+    printf("***********************\n"
+           "* EMPATE, FIM DE JOGO *\n"
+           "***********************\n\n");
 }
 
 int menu()
