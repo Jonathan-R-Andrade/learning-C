@@ -51,6 +51,7 @@ void imprimir_vencedor(int indice_do_jogador)
     printf("%s\n", asteriscos);
     printf("* PARABÉNS %s, VOCÊ VENCEU! *\n", nomes_dos_jogadores[indice_do_jogador]);
     printf("%s\n\n", asteriscos);
+    printf("-------------------------------------------------------\n\n");
 }
 
 int verificar_posicao(char tabuleiro[][3], int linha, int coluna)
@@ -225,72 +226,73 @@ void iniciar_partida()
 
     limpar_terminal();
     exibir_tabuleiro(tabuleiro);
-    printf("***********************\n"
-           "* EMPATE, FIM DE JOGO *\n"
-           "***********************\n\n");
+    printf("**********\n"
+           "* EMPATE *\n"
+           "**********\n\n"
+           "-------------------------------------------------------\n\n");
 }
 
 int menu()
 {
-    int opcao;
-    do
-    {
-        printf("          Jogo da Velha\n\n");
-        printf("Presione 0 para sair ou 1 para jogar.\n");
-        printf("Opcao: ");
-        scanf("%d", &opcao);
-        puts("");
+    printf("           #################\n"
+           "           # Jogo da Velha #\n"
+           "           #################\n\n");
 
-        switch (opcao)
+    while (1)
+    {
+        printf("Escolha uma opção:\n"
+               " 0 para encerrar o jogo.\n"
+               " 1 para jogar.\n\n");
+
+        int opcao;
+        printf("Opção: ");
+        scanf("%d", &opcao);
+
+        if (opcao == 0 || opcao == 1)
         {
-        case 0:
-            return 0;
-        case 1:
-            return 1;
-        default:
-            limpar_terminal();
-            printf("Opcao invalida.\n\n");
+            puts("");
+            return opcao;
         }
-    } while (1);
+        else
+            printf("Opção inválida.\n\n");
+    }
 }
 
 void pegar_nome_do_jogador(int indice_do_jogador)
 {
     char *nome_do_jogador = nomes_dos_jogadores[indice_do_jogador];
-    char pegar_nome = 1;
-    do
+    while (1)
     {
         printf("Informe o nome do jogador %d: ", indice_do_jogador + 1);
         scanf(" %20[^\n]", nome_do_jogador);
         limpar_entrada_padrao();
         puts("");
+
         int tamanho_do_nome = (int)strlen(nome_do_jogador);
+
         if (tamanho_do_nome > 2)
-        {
-            pegar_nome = 0;
-        }
+            break;
         else
-        {
             puts("O nome do jogador deve ter no mínimo três caracteres.\n");
-        }
-    } while (pegar_nome);
+    }
 }
 
 int main()
 {
-    int continuar = menu();
+    int opcao = menu();
 
-    if (continuar == 0)
-        return 0;
-
-    pegar_nome_do_jogador(0);
-    pegar_nome_do_jogador(1);
-
-    while (continuar)
+    if (opcao == 1)
     {
-        iniciar_partida();
-        continuar = menu();
+        pegar_nome_do_jogador(0);
+        pegar_nome_do_jogador(1);
     }
 
+    while (opcao == 1)
+    {
+        iniciar_partida();
+        opcao = menu();
+    }
+
+    printf("Jogo encerrado.\n");
     return 0;
 }
