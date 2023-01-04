@@ -62,14 +62,7 @@ int verificar_linha(char tabuleiro[][3]) {
         }
     }
 
-    if (indice_do_vencedor != -1) {
-        limpar_terminal();
-        exibir_tabuleiro(tabuleiro);
-        imprimir_vencedor(indice_do_vencedor);
-        return 1;
-    }
-
-    return 0;
+    return indice_do_vencedor;
 }
 
 int verificar_coluna(char tabuleiro[][3]) {
@@ -83,14 +76,7 @@ int verificar_coluna(char tabuleiro[][3]) {
         }
     }
 
-    if (indice_do_vencedor != -1) {
-        limpar_terminal();
-        exibir_tabuleiro(tabuleiro);
-        imprimir_vencedor(indice_do_vencedor);
-        return 1;
-    }
-
-    return 0;
+    return indice_do_vencedor;
 }
 
 int verificar_diagonal(char tabuleiro[][3]) {
@@ -104,14 +90,7 @@ int verificar_diagonal(char tabuleiro[][3]) {
         if (tabuleiro[0][2] == 'O') indice_do_vencedor = 1;
     }
 
-    if (indice_do_vencedor != -1) {
-        limpar_terminal();
-        exibir_tabuleiro(tabuleiro);
-        imprimir_vencedor(indice_do_vencedor);
-        return 1;
-    }
-
-    return 0;
+    return indice_do_vencedor;
 }
 
 void solicitar_posicao(char tabuleiro[][3], int indice_do_jogador) {
@@ -151,19 +130,17 @@ void solicitar_posicao(char tabuleiro[][3], int indice_do_jogador) {
     tabuleiro[linha][coluna] = simbolo_do_jogador;
 }
 
-int jogar(char tabuleiro[][3], int indice_do_jogador) {
-    solicitar_posicao(tabuleiro, indice_do_jogador);
+int verificar_vencedor(char tabuleiro[][3]) {
+    int indice_do_vencedor = verificar_linha(tabuleiro);
+    if (indice_do_vencedor != -1) return indice_do_vencedor;
 
-    int fim_de_jogo = verificar_linha(tabuleiro);
-    if (fim_de_jogo) return 1;
+    indice_do_vencedor = verificar_coluna(tabuleiro);
+    if (indice_do_vencedor != -1) return indice_do_vencedor;
 
-    fim_de_jogo = verificar_coluna(tabuleiro);
-    if (fim_de_jogo) return 1;
+    indice_do_vencedor = verificar_diagonal(tabuleiro);
+    if (indice_do_vencedor != -1) return indice_do_vencedor;
 
-    fim_de_jogo = verificar_diagonal(tabuleiro);
-    if (fim_de_jogo) return 1;
-
-    return 0;
+    return -1;
 }
 
 void iniciar_partida() {
@@ -173,21 +150,30 @@ void iniciar_partida() {
         {' ', ' ', ' '},
     };
 
+    int indice_do_vencedor = -1;
+
     for (int i = 0; i < 9; i++) {
         int indice_do_jogador = i % 2;
 
-        int fim_de_jogo = jogar(tabuleiro, indice_do_jogador);
+        solicitar_posicao(tabuleiro, indice_do_jogador);
 
-        if (fim_de_jogo) return;
+        indice_do_vencedor = verificar_vencedor(tabuleiro);
+
+        if (indice_do_vencedor != -1) break;
     }
 
     limpar_terminal();
     exibir_tabuleiro(tabuleiro);
-    printf(
-        "**********\n"
-        "* EMPATE *\n"
-        "**********\n\n"
-        "-------------------------------------------------------\n\n");
+
+    if (indice_do_vencedor != -1) {
+        imprimir_vencedor(indice_do_vencedor);
+    } else {
+        printf(
+            "**********\n"
+            "* EMPATE *\n"
+            "**********\n\n"
+            "-------------------------------------------------------\n\n");
+    }
 }
 
 int menu() {
