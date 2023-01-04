@@ -155,11 +155,19 @@ int verificar_diagonal(char tabuleiro[][3])
 void solicitar_posicao(char tabuleiro[][3], int indice_do_jogador)
 {
     int linha, coluna, erro = 0;
+    char simbolo_do_jogador;
+    char *nome_do_jogador = nomes_dos_jogadores[indice_do_jogador];
+
+    if (indice_do_jogador == 0)
+        simbolo_do_jogador = 'X';
+    else
+        simbolo_do_jogador = 'O';
+
     do
     {
         limpar_terminal();
         exibir_tabuleiro(tabuleiro);
-        printf("-> SUA VEZ %s\n\n", nomes_dos_jogadores[indice_do_jogador]);
+        printf("-> Sua vez %s, seu símbolo é %c.\n\n", nome_do_jogador, simbolo_do_jogador);
 
         switch (erro)
         {
@@ -181,10 +189,7 @@ void solicitar_posicao(char tabuleiro[][3], int indice_do_jogador)
         erro = verificar_posicao(tabuleiro, linha, coluna);
     } while (erro);
 
-    if (indice_do_jogador == 0)
-        tabuleiro[linha][coluna] = 'X';
-    else
-        tabuleiro[linha][coluna] = 'O';
+    tabuleiro[linha][coluna] = simbolo_do_jogador;
 }
 
 int jogar(char tabuleiro[][3], int indice_do_jogador)
@@ -241,8 +246,8 @@ int menu()
     while (1)
     {
         printf("Escolha uma opção:\n"
-               " 0 para encerrar o jogo.\n"
-               " 1 para jogar.\n\n");
+               " 0 - para encerrar o jogo.\n"
+               " 1 - para jogar.\n\n");
 
         int opcao;
         printf("Opção: ");
