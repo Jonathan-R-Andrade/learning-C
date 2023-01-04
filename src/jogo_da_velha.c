@@ -246,8 +246,8 @@ int menu()
     while (1)
     {
         printf("Escolha uma opção:\n"
-               " 0 - para encerrar o jogo.\n"
-               " 1 - para jogar.\n\n");
+               " 0 - Encerrar o jogo.\n"
+               " 1 - Jogar.\n\n");
 
         int opcao;
         printf("Opção: ");
