@@ -137,10 +137,7 @@ int verificar_vencedor(char tabuleiro[][3]) {
     indice_do_vencedor = verificar_coluna(tabuleiro);
     if (indice_do_vencedor != -1) return indice_do_vencedor;
 
-    indice_do_vencedor = verificar_diagonal(tabuleiro);
-    if (indice_do_vencedor != -1) return indice_do_vencedor;
-
-    return -1;
+    return verificar_diagonal(tabuleiro);
 }
 
 void iniciar_partida() {
