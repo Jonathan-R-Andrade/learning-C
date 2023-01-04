@@ -58,7 +58,6 @@ int verificar_linha(char tabuleiro[][3]) {
         if (tabuleiro[linha][0] == tabuleiro[linha][1] &&
             tabuleiro[linha][1] == tabuleiro[linha][2]) {
             if (tabuleiro[linha][0] == 'X') indice_do_vencedor = 0;
-
             if (tabuleiro[linha][0] == 'O') indice_do_vencedor = 1;
         }
     }
@@ -80,7 +79,6 @@ int verificar_coluna(char tabuleiro[][3]) {
         if (tabuleiro[0][coluna] == tabuleiro[1][coluna] &&
             tabuleiro[1][coluna] == tabuleiro[2][coluna]) {
             if (tabuleiro[0][coluna] == 'X') indice_do_vencedor = 0;
-
             if (tabuleiro[0][coluna] == 'O') indice_do_vencedor = 1;
         }
     }
@@ -100,11 +98,9 @@ int verificar_diagonal(char tabuleiro[][3]) {
 
     if (tabuleiro[0][0] == tabuleiro[1][1] && tabuleiro[1][1] == tabuleiro[2][2]) {
         if (tabuleiro[0][0] == 'X') indice_do_vencedor = 0;
-
         if (tabuleiro[0][0] == 'O') indice_do_vencedor = 1;
     } else if (tabuleiro[0][2] == tabuleiro[1][1] && tabuleiro[1][1] == tabuleiro[2][0]) {
         if (tabuleiro[0][2] == 'X') indice_do_vencedor = 0;
-
         if (tabuleiro[0][2] == 'O') indice_do_vencedor = 1;
     }
 
