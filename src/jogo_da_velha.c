@@ -52,7 +52,7 @@ int verificar_posicao(char tabuleiro[][3], int linha, int coluna) {
 }
 
 void solicitar_posicao(char tabuleiro[][3], int indice_do_jogador) {
-    int linha, coluna, erro = 0;
+    int linha = 0, coluna = 0, erro = 0;
     char simbolo_do_jogador;
     char *nome_do_jogador = nomes_dos_jogadores[indice_do_jogador];
 
@@ -68,7 +68,7 @@ void solicitar_posicao(char tabuleiro[][3], int indice_do_jogador) {
 
         switch (erro) {
             case 1:
-                printf("Esse lugar já está ocupado, tente de novo.\n\n");
+                printf("Essa posição já está ocupada, tente de novo.\n\n");
                 break;
             case 2:
                 printf("Essa posição não existe, tente de novo.\n\n");
@@ -77,8 +77,11 @@ void solicitar_posicao(char tabuleiro[][3], int indice_do_jogador) {
 
         printf("Informe uma linha: ");
         scanf("%d", &linha);
+        limpar_entrada_padrao();
+
         printf("Informe uma coluna: ");
         scanf("%d", &coluna);
+        limpar_entrada_padrao();
 
         linha--;
         coluna--;
@@ -185,9 +188,10 @@ int menu() {
             " 0 - Encerrar o jogo.\n"
             " 1 - Jogar.\n\n");
 
-        int opcao;
+        int opcao = -1;
         printf("Opção: ");
         scanf("%d", &opcao);
+        limpar_entrada_padrao();
 
         if (opcao == 0 || opcao == 1) {
             puts("");
