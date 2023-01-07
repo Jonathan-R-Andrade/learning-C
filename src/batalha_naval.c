@@ -4,7 +4,6 @@
 
 char tabuleiro[5][5];
 int navio[3][2];
-int tiro[2];
 int tentativas = 0, acertos = 0;
 
 void inicializar_tabuleiro();
@@ -12,9 +11,8 @@ void mostrar_tabuleiro();
 void iniciar_navios();
 void atirar();
 int acertou(int linha, int coluna);
-void dica();
-void alterar_tabuleiro(char pos);
-int verificar_posicao();
+void dica(int linha_do_tiro, int coluna_do_tiro);
+int verificar_local_do_tiro(int linha, int coluna);
 void limpar_terminal();
 void limpar_entrada_padrao();
 int menu();
@@ -123,37 +121,38 @@ void iniciar_navios() {
 }
 
 void atirar() {
-    int linha, coluna;
+    int linha, coluna, erro = 0;
     do {
-        do {
-            printf("Informe uma linha: ");
-            scanf("%d", &linha);
-            if (linha < 1 || linha > 5) {
-                printf("Por favor informe um valor entre 1 e 5\n\n");
-            }
-        } while (linha < 1 || linha > 5);
-        do {
-            printf("Informe uma coluna: ");
-            scanf("%d", &coluna);
-            puts("");
-            if (coluna < 1 || coluna > 5) {
-                printf("Por favor informe um valor entre 1 e 5\n\n");
-            }
-        } while (coluna < 1 || coluna > 5);
-        tiro[0] = linha;
-        tiro[1] = coluna;
-    } while (verificar_posicao());
+        switch (erro) {
+            case 1:
+                printf("Esse local já foi escolhido, tente de novo.\n\n");
+                break;
+            case 2:
+                printf("Esse local não existe, tente de novo.\n\n");
+                break;
+        }
 
+        printf("Informe uma linha: ");
+        scanf("%d", &linha);
+        limpar_entrada_padrao();
+
+        printf("Informe uma coluna: ");
+        scanf("%d", &coluna);
+        limpar_entrada_padrao();
+
+        erro = verificar_local_do_tiro(linha, coluna);
+    } while (erro);
+
+    puts("");
     tentativas++;
 
     if (acertou(linha, coluna)) {
-        dica();
-        printf("Voce acertou o tiro (%d,%d)\n\n", tiro[0], tiro[1]);
-        alterar_tabuleiro('X');
-
+        dica(linha, coluna);
+        printf("Voce acertou o tiro (%d,%d)\n\n", linha, coluna);
+        tabuleiro[linha - 1][coluna - 1] = 'X';
     } else {
-        dica();
-        alterar_tabuleiro('*');
+        dica(linha, coluna);
+        tabuleiro[linha - 1][coluna - 1] = '*';
     }
 }
 
@@ -168,28 +167,26 @@ int acertou(int linha, int coluna) {
     return 0;
 }
 
-void alterar_tabuleiro(char pos) {
-    tabuleiro[tiro[0] - 1][tiro[1] - 1] = pos;
-}
-
-void dica() {
-    int linha, coluna, nl = 0, nc = 0;
-    for (linha = 0; linha < 3; linha++) {
-        if (tiro[0] == navio[linha][0]) nl++;
-    }
-    for (coluna = 0; coluna < 3; coluna++) {
-        if (tiro[1] == navio[coluna][1]) nc++;
+void dica(int linha_do_tiro, int coluna_do_tiro) {
+    int navios_na_linha = 0, navios_na_coluna = 0;
+    for (int i = 0; i < 3; i++) {
+        if (linha_do_tiro == navio[i][0]) navios_na_linha++;
+        if (coluna_do_tiro == navio[i][1]) navios_na_coluna++;
     }
 
     puts("Dica:");
-    printf("Linha %d -> %d navio(s)\n", tiro[0], nl);
-    printf("Coluna %d -> %d navio(s)\n\n", tiro[1], nc);
+    printf("A linha %d tem %d navio(s)\n", linha_do_tiro, navios_na_linha);
+    printf("A coluna %d tem %d navio(s)\n\n", coluna_do_tiro, navios_na_coluna);
 }
 
-int verificar_posicao() {
-    if (tabuleiro[tiro[0] - 1][tiro[1] - 1] == '~') return 0;
-    puts("Posicao ocupada, tente de novo.\n");
-    return 1;
+int verificar_local_do_tiro(int linha, int coluna) {
+    if (linha >= 1 && linha <= 5 && coluna >= 1 && coluna <= 5) {
+        if (tabuleiro[linha - 1][coluna - 1] == '~')
+            return 0;  // Local disponível
+        else
+            return 1;  // O local já foi escolhido
+    }
+    return 2;  // Local inexistente
 }
 
 void limpar_terminal() {
