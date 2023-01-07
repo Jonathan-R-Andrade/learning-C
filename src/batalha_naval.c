@@ -51,11 +51,13 @@ int menu() {
 void jogar() {
     inicializar_tabuleiro();
     iniciar_navios();
+
     do {
         limpar_terminal();
         mostrar_tabuleiro();
         atirar();
     } while (acertos < 3);
+
     printf("Jogo terminado. Voce acertou os 3 navios em %d tentativas.\n\n", tentativas);
     mostrar_tabuleiro();
 }
@@ -87,17 +89,14 @@ void inicializar_tabuleiro() {
 
 void mostrar_tabuleiro() {
     puts("    1    2    3    4    5");
-    int linha, coluna;
-    for (linha = 0; linha < 5; linha++) {
+    for (int linha = 0; linha < 5; linha++) {
         printf("%d   ", (linha + 1));
-        for (coluna = 0; coluna < 5; coluna++) {
+        for (int coluna = 0; coluna < 5; coluna++) {
             if (coluna < 4)
                 printf("%c    ", tabuleiro[linha][coluna]);
             else
-                printf("%c", tabuleiro[linha][coluna]);
+                printf("%c\n", tabuleiro[linha][coluna]);
         }
-        puts("");
-        coluna = 0;
     }
     puts("");
 }
@@ -157,8 +156,7 @@ void atirar() {
 }
 
 int acertou(int linha, int coluna) {
-    int i;
-    for (i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) {
         if (navio[i][0] == linha && navio[i][1] == coluna) {
             acertos++;
             return 1;
