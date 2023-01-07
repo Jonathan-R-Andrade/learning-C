@@ -4,12 +4,11 @@
 
 char tabuleiro[5][5];
 int navio[3][2];
-int tentativas = 0, acertos = 0;
 
 void inicializar_tabuleiro();
 void mostrar_tabuleiro();
 void iniciar_navios();
-void atirar();
+int atirar(int local_do_tiro[2]);
 int acertou(int linha, int coluna);
 void dica(int linha_do_tiro, int coluna_do_tiro);
 int verificar_local_do_tiro(int linha, int coluna);
@@ -49,17 +48,41 @@ int menu() {
 }
 
 void jogar() {
-    inicializar_tabuleiro();
-    iniciar_navios();
+    int local_do_tiro[2];
+    int acertou_o_tiro = 0, acertos = 0, tentativas = 0;
 
-    do {
+    iniciar_navios();
+    inicializar_tabuleiro();
+
+    while (1) {
         limpar_terminal();
         mostrar_tabuleiro();
-        atirar();
-    } while (acertos < 3);
 
-    printf("Jogo terminado. Voce acertou os 3 navios em %d tentativas.\n\n", tentativas);
-    mostrar_tabuleiro();
+        // HACK TEMPORÁRIO
+        printf("HACK TEMPORÁRIO -> (%d,%d) | ", navio[0][0], navio[0][1]);
+        printf("(%d,%d) | ", navio[1][0], navio[1][1]);
+        printf("(%d,%d)\n\n", navio[2][0], navio[2][1]);
+        // HACK TEMPORÁRIO
+
+        if (acertou_o_tiro) {
+            printf("Voce acertou o tiro (%d,%d)\n\n", local_do_tiro[0], local_do_tiro[1]);
+            if (acertos == 3) break;
+            dica(local_do_tiro[0], local_do_tiro[1]);
+            acertou_o_tiro = 0;
+        }
+
+        acertou_o_tiro = atirar(local_do_tiro);
+        tentativas++;
+
+        if (acertou_o_tiro) {
+            acertos++;
+        }
+    }
+
+    printf("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+    printf("X Fim de jogo. Voce acertou os 3 navios com %d tentativas. X\n", tentativas);
+    printf("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\n");
+    printf("-------------------------------------------------------------\n\n");
 }
 
 int main() {
@@ -119,7 +142,7 @@ void iniciar_navios() {
     }
 }
 
-void atirar() {
+int atirar(int local_do_tiro[2]) {
     int linha, coluna, erro = 0;
     do {
         switch (erro) {
@@ -142,25 +165,21 @@ void atirar() {
         erro = verificar_local_do_tiro(linha, coluna);
     } while (erro);
 
-    puts("");
-    tentativas++;
+    local_do_tiro[0] = linha;
+    local_do_tiro[1] = coluna;
 
-    if (acertou(linha, coluna)) {
-        dica(linha, coluna);
-        printf("Voce acertou o tiro (%d,%d)\n\n", linha, coluna);
-        tabuleiro[linha - 1][coluna - 1] = 'X';
+    if (acertou(local_do_tiro[0], local_do_tiro[1])) {
+        tabuleiro[local_do_tiro[0] - 1][local_do_tiro[1] - 1] = 'X';
+        return 1;
     } else {
-        dica(linha, coluna);
-        tabuleiro[linha - 1][coluna - 1] = '*';
+        tabuleiro[local_do_tiro[0] - 1][local_do_tiro[1] - 1] = '*';
+        return 0;
     }
 }
 
 int acertou(int linha, int coluna) {
     for (int i = 0; i < 3; i++) {
-        if (navio[i][0] == linha && navio[i][1] == coluna) {
-            acertos++;
-            return 1;
-        }
+        if (navio[i][0] == linha && navio[i][1] == coluna) return 1;
     }
     return 0;
 }
