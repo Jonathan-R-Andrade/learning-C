@@ -16,36 +16,65 @@ void dica();
 void alterar_tabuleiro(char pos);
 int verificar_posicao();
 void limpar_terminal();
+void limpar_entrada_padrao();
+int menu();
+void jogar();
 
-int main(void) {
-    int continuar = 1, c = 1;
+void limpar_entrada_padrao() {
+    char c;
+    while ((c = getchar()) != '\n' && c != EOF) {};
+}
 
+int menu() {
+    printf(
+        "           ~~~~~~~~~~~~~~~~~~~\n"
+        "           X* Batalha Naval *X\n"
+        "           ~~~~~~~~~~~~~~~~~~~\n\n");
+
+    while (1) {
+        printf(
+            "Escolha uma opção:\n"
+            " 0 - Encerrar o jogo.\n"
+            " 1 - Jogar.\n\n");
+
+        int opcao = -1;
+        printf("Opção: ");
+        scanf("%d", &opcao);
+        limpar_entrada_padrao();
+
+        if (opcao == 0 || opcao == 1) {
+            puts("");
+            return opcao;
+        } else
+            printf("Opção inválida.\n\n");
+    }
+}
+
+void jogar() {
+    inicializar_tabuleiro();
+    iniciar_navios();
     do {
-        inicializar_tabuleiro();
-        iniciar_navios();
-        do {
-            mostrar_tabuleiro();
-            atirar();
-        } while (acertos < 3);
-        printf("Jogo terminado. Voce acertou os 3 navios em %d tentativas.\n\n", tentativas);
+        limpar_terminal();
         mostrar_tabuleiro();
-        do {
-            puts("Deseja jogar de novo:");
-            puts("0 para nao.");
-            puts("1 para sim.");
-            scanf("%d", &continuar);
-            switch (continuar) {
-                case 0:
-                    c = 0;
-                    break;
-                case 1:
-                    c = 0;
-                    break;
-                default:
-                    printf("Opcao invalida tente de novo.\n\n");
-            }
-        } while (c);
-    } while (continuar);
+        atirar();
+    } while (acertos < 3);
+    printf("Jogo terminado. Voce acertou os 3 navios em %d tentativas.\n\n", tentativas);
+    mostrar_tabuleiro();
+}
+
+int main() {
+    int opcao = menu();
+
+    while (opcao > 0) {
+        switch (opcao) {
+            case 1:
+                jogar();
+                break;
+        }
+        opcao = menu();
+    }
+
+    printf("Jogo encerrado.\n");
     return 0;
 }
 
