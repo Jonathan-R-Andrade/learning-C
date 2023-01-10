@@ -146,12 +146,6 @@ void jogar() {
         limpar_terminal();
         mostrar_tabuleiro(tabuleiro);
 
-        // HACK TEMPORÁRIO
-        printf("HACK TEMPORÁRIO -> (%d,%d) | ", navios[0][0], navios[0][1]);
-        printf("(%d,%d) | ", navios[1][0], navios[1][1]);
-        printf("(%d,%d)\n\n", navios[2][0], navios[2][1]);
-        // HACK TEMPORÁRIO
-
         if (acertou_o_tiro) {
             printf("Você acertou o tiro (%d,%d)\n\n", local_do_tiro[0], local_do_tiro[1]);
             if (acertos == 3) break;
