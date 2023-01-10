@@ -188,6 +188,31 @@ void jogar() {
     imprimir_fim_de_jogo(tentativas);
 }
 
+void imprimir_como_jogar() {
+    limpar_terminal();
+    puts(
+        "Regras:\n"
+        "Em um tabuleiro 5x5, ou seja, com 25 blocos, existem 3 navios escondidos (um em cada "
+        "bloco).\n"
+        "Seu objetivo é atirar até acertar todos os navios.\n"
+        "Se você errar o tiro, é dada uma dica informando quantos navios existem na linha e na "
+        "coluna onde você atirou.\n"
+        "O jogo acaba quando você acertar os três navios.\n");
+
+    puts(
+        "Legenda:\n"
+        "~ - Água, nenhum tiro foi dado.\n"
+        "* - Tiro dado, nenhum navio foi acertado.\n"
+        "X - Tiro dado, um navio foi acertado.\n");
+
+    puts(
+        "Como jogar:\n"
+        "A cada rodada você terá que dar um tiro, para isso, informe o número da linha e o número "
+        "da coluna onde você quer atirar.\n"
+        "Depois aguarde a mensagem dizendo que você acertou o tiro ou a dica caso você tenha "
+        "errado.\n");
+}
+
 int menu() {
     printf(
         "           ~~~~~~~~~~~~~~~~~~~\n"
@@ -198,14 +223,15 @@ int menu() {
         printf(
             "Escolha uma opção:\n"
             " 0 - Encerrar o jogo.\n"
-            " 1 - Jogar.\n\n");
+            " 1 - Jogar.\n"
+            " 2 - Como jogar.\n\n");
 
         int opcao = -1;
         printf("Opção: ");
         scanf("%d", &opcao);
         limpar_entrada_padrao();
 
-        if (opcao == 0 || opcao == 1) {
+        if (opcao >= 0 && opcao <= 2) {
             puts("");
             return opcao;
         } else
@@ -220,6 +246,9 @@ int main() {
         switch (opcao) {
             case 1:
                 jogar();
+                break;
+            case 2:
+                imprimir_como_jogar();
                 break;
         }
     } while (opcao > 0);
