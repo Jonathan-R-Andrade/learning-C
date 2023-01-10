@@ -1,7 +1,6 @@
-#include<stdio.h>
+#include <stdio.h>
 
 int main() {
-
     int meses, contador = 1;
     float inicial, mensal, final;
 
@@ -24,5 +23,4 @@ int main() {
     }
 
     printf("\n\nVoce lucrou %.2f.\n", (final - (mensal * meses + inicial)));
-
 }
