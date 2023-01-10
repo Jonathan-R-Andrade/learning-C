@@ -146,7 +146,7 @@ void jogar() {
     char tabuleiro[5][5];
     int navio[3][2];       // Localização dos navios
     int local_do_tiro[2];  // Localização do último tiro dado pelo usuário
-    int dicas[3][4];
+    int dicas[3][4];       // Dicas de quantos navios existem na linha e coluna
     int acertou_o_tiro = 0, acertos = 0, tentativas = 0, dicas_totais = 0;
 
     iniciar_navios(navio);
