@@ -15,27 +15,27 @@ void limpar_entrada_padrao() {
 
 void iniciar_navios(int navio[3][2]) {
     int i, j, linha, coluna, continuar;
+    srand(time(NULL));
 
     for (i = 0; i < 3; i++) {
-        do {
-            continuar = 0;
-            srand(time(NULL));
-            linha = (rand() % 5) + 1;
-            coluna = (rand() % 5) + 1;
-            navio[i][0] = linha;
-            navio[i][1] = coluna;
-            for (j = 0; j < i; j++) {
-                if (navio[i][0] == navio[j][0] && navio[j][1] == navio[i][1]) continuar = 1;
-            }
-        } while (continuar);
+        linha = (rand() % 5) + 1;
+        coluna = (rand() % 5) + 1;
+        navio[i][0] = linha;
+        navio[i][1] = coluna;
+        // Se a localização for repetida, subtrai 1 de i para tentar uma nova localização
+        for (j = 0; j < i; j++) {
+            if (navio[i][0] == navio[j][0] && navio[i][1] == navio[j][1]) {
+                i--;
+                break;
+            };
+        }
     }
 }
 
 void inicializar_tabuleiro(char tabuleiro[5][5]) {
-    int l, c;
-    for (l = 0; l < 5; l++) {
-        for (c = 0; c < 5; c++) {
-            tabuleiro[l][c] = '~';
+    for (int linha = 0; linha < 5; linha++) {
+        for (int coluna = 0; coluna < 5; coluna++) {
+            tabuleiro[linha][coluna] = '~';
         }
     }
 }
@@ -144,8 +144,8 @@ void imprimir_fim_de_jogo(int tentativas) {
 
 void jogar() {
     char tabuleiro[5][5];
-    int navio[3][2];
-    int local_do_tiro[2];
+    int navio[3][2];       // Localização dos navios
+    int local_do_tiro[2];  // Localização do último tiro dado pelo usuário
     int dicas[3][4];
     int acertou_o_tiro = 0, acertos = 0, tentativas = 0, dicas_totais = 0;
 
