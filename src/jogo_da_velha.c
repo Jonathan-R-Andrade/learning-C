@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-char nomes_dos_jogadores[2][21];
-
 void exibir_tabuleiro(char tabuleiro[][3]) {
     printf(
         "\n        1   2   3\n\n"
@@ -24,8 +22,7 @@ void limpar_entrada_padrao() {
     while ((c = getchar()) != '\n' && c != EOF) {};
 }
 
-void imprimir_vencedor(int indice_do_jogador) {
-    char *nome_do_jogador = nomes_dos_jogadores[indice_do_jogador];
+void imprimir_vencedor(char *nome_do_jogador) {
     int tamanho_nome_jogador = (int)strlen(nome_do_jogador);
     int tamanho_texto_vencedor = 27;
     int total_de_asteriscos = tamanho_nome_jogador + tamanho_texto_vencedor;
@@ -35,7 +32,7 @@ void imprimir_vencedor(int indice_do_jogador) {
     asteriscos[total_de_asteriscos] = '\0';
 
     printf("%s\n", asteriscos);
-    printf("* PARABÉNS %s, VOCÊ VENCEU! *\n", nomes_dos_jogadores[indice_do_jogador]);
+    printf("* PARABÉNS %s, VOCÊ VENCEU! *\n", nome_do_jogador);
     printf("%s\n\n", asteriscos);
     printf("-------------------------------------------------------\n\n");
 }
@@ -50,10 +47,9 @@ int verificar_posicao(char tabuleiro[][3], int linha, int coluna) {
     return 2;  // Posição inexistente
 }
 
-void solicitar_posicao(char tabuleiro[][3], int indice_do_jogador) {
+void solicitar_posicao(char tabuleiro[][3], int indice_do_jogador, char *nome_do_jogador) {
     int linha = 0, coluna = 0, erro = 0;
     char simbolo_do_jogador;
-    char *nome_do_jogador = nomes_dos_jogadores[indice_do_jogador];
 
     if (indice_do_jogador == 0)
         simbolo_do_jogador = 'X';
@@ -142,7 +138,7 @@ int verificar_vencedor(char tabuleiro[][3]) {
     return verificar_diagonal(tabuleiro);
 }
 
-void iniciar_partida() {
+void iniciar_partida(char nomes_dos_jogadores[2][21]) {
     char tabuleiro[3][3] = {
         {' ', ' ', ' '},
         {' ', ' ', ' '},
@@ -153,8 +149,9 @@ void iniciar_partida() {
 
     for (int i = 0; i < 9; i++) {
         int indice_do_jogador = i % 2;
+        char *nome_do_jogador = nomes_dos_jogadores[indice_do_jogador];
 
-        solicitar_posicao(tabuleiro, indice_do_jogador);
+        solicitar_posicao(tabuleiro, indice_do_jogador, nome_do_jogador);
 
         indice_do_vencedor = verificar_vencedor(tabuleiro);
 
@@ -165,7 +162,8 @@ void iniciar_partida() {
     exibir_tabuleiro(tabuleiro);
 
     if (indice_do_vencedor != -1) {
-        imprimir_vencedor(indice_do_vencedor);
+        char *nome_do_jogador = nomes_dos_jogadores[indice_do_vencedor];
+        imprimir_vencedor(nome_do_jogador);
     } else {
         printf(
             "**********\n"
@@ -200,7 +198,7 @@ int menu() {
     }
 }
 
-void pegar_nome_do_jogador(int indice_do_jogador) {
+void pegar_nome_do_jogador(int indice_do_jogador, char nomes_dos_jogadores[2][21]) {
     char *nome_do_jogador = nomes_dos_jogadores[indice_do_jogador];
     while (1) {
         printf("Informe o nome do jogador %d: ", indice_do_jogador + 1);
@@ -218,15 +216,16 @@ void pegar_nome_do_jogador(int indice_do_jogador) {
 }
 
 int main() {
+    char nomes_dos_jogadores[2][21];
     int opcao = menu();
 
     if (opcao == 1) {
-        pegar_nome_do_jogador(0);
-        pegar_nome_do_jogador(1);
+        pegar_nome_do_jogador(0, nomes_dos_jogadores);
+        pegar_nome_do_jogador(1, nomes_dos_jogadores);
     }
 
     while (opcao == 1) {
-        iniciar_partida();
+        iniciar_partida(nomes_dos_jogadores);
         opcao = menu();
     }
 
