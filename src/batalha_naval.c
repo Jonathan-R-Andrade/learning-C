@@ -163,7 +163,7 @@ void jogar() {
         // HACK TEMPORÁRIO
 
         if (acertou_o_tiro) {
-            printf("Voce acertou o tiro (%d,%d)\n\n", local_do_tiro[0], local_do_tiro[1]);
+            printf("Você acertou o tiro (%d,%d)\n\n", local_do_tiro[0], local_do_tiro[1]);
             if (acertos == 3) break;
             dicas_totais = dica(navio, local_do_tiro[0], local_do_tiro[1], dicas, dicas_totais);
             acertou_o_tiro = 0;
