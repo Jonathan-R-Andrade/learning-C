@@ -64,10 +64,12 @@ int verificar_local_do_tiro(char tabuleiro[5][5], int linha, int coluna) {
     return 2;  // Local inexistente
 }
 
-int acertou(int navio[3][2], int linha, int coluna) {
+int verificar_tiro(int navio[3][2], int linha, int coluna) {
     for (int i = 0; i < 3; i++) {
+        // Retorna 1 se o navio foi acertado
         if (navio[i][0] == linha && navio[i][1] == coluna) return 1;
     }
+    // Retorna 0 se o navio não foi acertado
     return 0;
 }
 
@@ -172,11 +174,11 @@ void jogar() {
         mostrar_dicas(dicas, dicas_totais);
 
         atirar(tabuleiro, local_do_tiro);
+        acertou_o_tiro = verificar_tiro(navio, local_do_tiro[0], local_do_tiro[1]);
         tentativas++;
 
-        if (acertou(navio, local_do_tiro[0], local_do_tiro[1])) {
+        if (acertou_o_tiro) {
             acertos++;
-            acertou_o_tiro = 1;
             tabuleiro[local_do_tiro[0] - 1][local_do_tiro[1] - 1] = 'X';
         } else {
             tabuleiro[local_do_tiro[0] - 1][local_do_tiro[1] - 1] = '*';
