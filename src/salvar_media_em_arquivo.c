@@ -1,35 +1,40 @@
 #include <stdio.h>
 
-int main(void)
-{
-    char url[] = "Dados.txt";
-    int numero,
-        total = 0;
-    float media = 0.0;
-    FILE *arq;
-    arq = fopen(url, "a");
-    if(arq == NULL)
-        puts("Problema ao abrir o arquivo!");
-    else
-    {
-        puts("Informe numeros decimais.\n"
-             "Digite 0 para parar.");
-        do
-        {
-            printf("Numero: ");
-            scanf("%d", &numero);
-            fflush(stdin);
+void limpar_entrada_padrao() {
+    char c;
+    while ((c = getchar()) != '\n' && c != EOF) {};
+}
+
+int main() {
+    char *nome_do_arquivo = "media.txt";
+    int total = 0;
+    double numero, media = 0.0;
+    FILE *arquivo = fopen(nome_do_arquivo, "w");
+
+    if (arquivo == NULL)
+        printf("Erro ao abrir/criar o arquivo \"%s\"!\n", nome_do_arquivo);
+    else {
+        puts(
+            "Informe números decimais.\n"
+            "Digite 0 para parar.\n");
+
+        do {
+            numero = 0;
+            printf("Número: ");
+            scanf(" %lf", &numero);
+            limpar_entrada_padrao();
             media += numero;
-            if(numero != 0)
-            {
+            if (numero != 0) {
                 total++;
-                fprintf(arq, "%d\n", numero);
+                fprintf(arquivo, "%g\n", numero);
             }
-        }
-        while(numero != 0);
+        } while (numero != 0);
+
         media /= total;
-        fprintf(arq, "Media = %.2f", media);
+        fprintf(arquivo, "Média = %g", media);
     }
-    fclose(arq);
+
+    printf("\nArquivo \"%s\" salvo.\n", nome_do_arquivo);
+    fclose(arquivo);
     return 0;
 }
