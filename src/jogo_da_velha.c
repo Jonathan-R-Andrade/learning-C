@@ -63,7 +63,7 @@ void solicitar_posicao(char tabuleiro[][3], int indice_do_jogador, char *nome_do
 
         switch (erro) {
             case 1:
-                printf("Essa posição já está ocupada, tente de novo.\n\n");
+                printf("Essa posição já foi escolhida, tente de novo.\n\n");
                 break;
             case 2:
                 printf("Essa posição não existe, tente de novo.\n\n");
