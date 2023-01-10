@@ -100,29 +100,18 @@ void atirar(char tabuleiro[5][5], int local_do_tiro[2]) {
     local_do_tiro[1] = coluna;
 }
 
-int dica(int navios[3][2], int linha, int coluna, int dicas[][4], int dicas_totais) {
-    dicas[dicas_totais][0] = linha;
-    dicas[dicas_totais][1] = 0;  // Total de navios na linha
-    dicas[dicas_totais][2] = coluna;
-    dicas[dicas_totais][3] = 0;  // Total de navios na coluna
+int dar_dica(int navios[3][2], int linha, int coluna) {
+    int navios_na_linha = 0;   // Total de navios na linha
+    int navios_na_coluna = 0;  // Total de navios na coluna
 
     for (int i = 0; i < 3; i++) {
-        if (linha == navios[i][0]) dicas[dicas_totais][1]++;
-        if (coluna == navios[i][1]) dicas[dicas_totais][3]++;
+        if (linha == navios[i][0]) navios_na_linha++;
+        if (coluna == navios[i][1]) navios_na_coluna++;
     }
 
-    return dicas_totais + 1;
-}
-
-void mostrar_dicas(int dicas[][4], int dicas_totais) {
-    if (dicas_totais > 0) {
-        for (int i = 0; i < dicas_totais; i++) {
-            printf("Dica %2d: ", i + 1);
-            printf("A linha %d tem %d navio(s) | ", dicas[i][0], dicas[i][1]);
-            printf("A coluna %d tem %d navio(s)\n", dicas[i][2], dicas[i][3]);
-        }
-        puts("");
-    }
+    printf("Dica: ");
+    printf("A linha %d tem %d navio(s) | ", linha, navios_na_linha);
+    printf("A coluna %d tem %d navio(s)\n\n", coluna, navios_na_coluna);
 }
 
 int contar_digitos(int numero) {
@@ -148,15 +137,13 @@ void jogar() {
     char tabuleiro[5][5];
     int navios[3][2];      // Localização dos navios
     int local_do_tiro[2];  // Localização do último tiro dado pelo usuário
-    int dicas[22][4];      // Dicas de quantos navios existem na linha e coluna
-    int acertou_o_tiro = 0, acertos = 0, tentativas = 0, dicas_totais = 0;
+    int acertou_o_tiro = 0, acertos = 0, tentativas = 0;
 
     iniciar_navios(navios);
     inicializar_tabuleiro(tabuleiro);
 
     while (acertos <= 3) {
         limpar_terminal();
-        mostrar_dicas(dicas, dicas_totais);
         mostrar_tabuleiro(tabuleiro);
 
         // HACK TEMPORÁRIO
@@ -169,6 +156,8 @@ void jogar() {
             printf("Você acertou o tiro (%d,%d)\n\n", local_do_tiro[0], local_do_tiro[1]);
             if (acertos == 3) break;
             acertou_o_tiro = 0;
+        } else if (tentativas > 0) {
+            dar_dica(navios, local_do_tiro[0], local_do_tiro[1]);
         }
 
         atirar(tabuleiro, local_do_tiro);
@@ -179,7 +168,6 @@ void jogar() {
             acertos++;
             tabuleiro[local_do_tiro[0] - 1][local_do_tiro[1] - 1] = 'X';
         } else {
-            dicas_totais = dica(navios, local_do_tiro[0], local_do_tiro[1], dicas, dicas_totais);
             tabuleiro[local_do_tiro[0] - 1][local_do_tiro[1] - 1] = '*';
         }
     }
