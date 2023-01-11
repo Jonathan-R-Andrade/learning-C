@@ -1,39 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void exibe(int *ptr, int termo, int *size) {
-    if (termo > *size) {
-        int v = (*size * sizeof(int));
-        int n = ((termo - *size) * sizeof(int));
-        printf("Velho %d\nNovo %d\n\n", v, n);
-        ptr = realloc(ptr, v + n);
-        int i;
-        for (i = *size; i < termo; i++) {
-            ptr[*size] = ptr[*size - 1] + ptr[*size - 2];
-            *size += 1;
-        }
-        printf("Termo %d = %d\n\n", termo, ptr[termo - 1]);
-    } else {
-        printf("Termo %d = %d\n\n", termo, ptr[termo - 1]);
-    }
-}
+int calcular_fibonacci(int *sequencia_fibonacci, int *termos_totais, int posicao) {
+    if (posicao > *termos_totais) {
+        int novo_tamanho_memoria = posicao * sizeof(int);
+        sequencia_fibonacci = (int *)realloc(sequencia_fibonacci, novo_tamanho_memoria);
 
-int calcular_fibonacci(int *sequencia_fibonacci, int *termos_totais, int termo) {
-    if (termo > *termos_totais) {
-        int novo_tamanho_memoria = termo * sizeof(int);
-        sequencia_fibonacci = realloc(sequencia_fibonacci, novo_tamanho_memoria);
-        
-        for (int i = *termos_totais; i < termo; i++) {
+        for (int i = *termos_totais; i < posicao; i++) {
             sequencia_fibonacci[i] = sequencia_fibonacci[i - 1] + sequencia_fibonacci[i - 2];
         }
-        *termos_totais = termo;
+
+        *termos_totais = posicao;
     }
-    return sequencia_fibonacci[termo - 1];
+    return sequencia_fibonacci[posicao - 1];
 }
 
 int main(void) {
     int posicao = 0, termos_totais = 2;
-    int *sequencia_fibonacci = malloc(termos_totais * sizeof(int));
+    int *sequencia_fibonacci = (int *)malloc(termos_totais * sizeof(int));
     sequencia_fibonacci[0] = 0;
     sequencia_fibonacci[1] = 1;
 
