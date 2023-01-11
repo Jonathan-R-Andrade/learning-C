@@ -31,7 +31,6 @@ int main(void) {
 
         int valor = calcular_fibonacci(sequencia_fibonacci, &termos_totais, posicao);
         printf("O %dº termo na sequência de Fibonacci é %d\n\n", posicao, valor);
-        printf("*** %d\n\n", termos_totais);
     } while (posicao > 0);
 
     puts("\nPrograma encerrado.");
