@@ -1,26 +1,34 @@
 #include <stdio.h>
 
 int main() {
-    int meses, contador = 1;
-    float inicial, mensal, final;
+    int meses = 0;
+    double juros = 0, valor_inicial = 0, valor_mensal = 0, valor_final;
 
-    printf("Qual o investimento inicial? ");
-    scanf("%f", &inicial);
+    printf("Qual é o investimento inicial? ");
+    scanf(" %lf", &valor_inicial);
 
-    printf("Qual o investimento mensal? ");
-    scanf("%f", &mensal);
+    printf("Qual é o investimento mensal? ");
+    scanf(" %lf", &valor_mensal);
 
-    printf("Por quantos meses voce vai investir? ");
-    scanf("%d", &meses);
+    printf("Por quantos meses você vai investir? ");
+    scanf(" %d", &meses);
 
-    final = inicial;
+    printf("Qual é a taxa de juros mensal (Exemplo 0.5)? ");
+    scanf(" %lf", &juros);
 
-    while (contador <= meses) {
-        final = final + (final * 0.005);
-        final += mensal;
-        printf("\nMes %d = %.2f", contador, final);
-        contador++;
+    valor_final = valor_inicial;
+    juros = (juros / 100) + 1;
+
+    for (int mes = 1; mes <= meses; mes++) {
+        valor_final *= juros;
+        valor_final += valor_mensal;
+        printf("\nMês %d = %.2f", mes, valor_final);
     }
 
-    printf("\n\nVoce lucrou %.2f.\n", (final - (mensal * meses + inicial)));
+    double total_investido = valor_inicial + (valor_mensal * meses);
+    double lucro = valor_final - total_investido;
+
+    printf("\n\nValor total investido %.2lf\n", total_investido);
+    printf("Valor total final %.2lf\n", valor_final);
+    printf("Você lucrou %.2lf\n", lucro);
 }
