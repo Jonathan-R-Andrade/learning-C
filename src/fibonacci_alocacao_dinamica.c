@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void limpar_entrada_padrao() {
+    char c;
+    while ((c = getchar()) != '\n' && c != EOF) {};
+}
+
 int calcular_fibonacci(int **sequencia_fibonacci, int *termos_totais, int posicao) {
     if (posicao > *termos_totais) {
         int novo_tamanho_memoria = posicao * sizeof(int);
@@ -16,7 +21,7 @@ int calcular_fibonacci(int **sequencia_fibonacci, int *termos_totais, int posica
     return (*sequencia_fibonacci)[posicao - 1];
 }
 
-int main(void) {
+int main() {
     int posicao = 0, termos_totais = 2;
     int *sequencia_fibonacci = (int *)malloc(termos_totais * sizeof(int));
     sequencia_fibonacci[0] = 0;
@@ -26,9 +31,18 @@ int main(void) {
     puts("Digite a posição do termo que você quer ver ou 0 para encerrar.\n");
 
     do {
+        posicao = -1;
         printf("Digite a posição do termo: ");
         scanf("%d", &posicao);
-        if (posicao <= 0) break;
+        limpar_entrada_padrao();
+
+        if (posicao < 0) {
+            puts("Posição incorreta.\n");
+            posicao = 1;
+            continue;
+        } else if (posicao == 0) {
+            break;
+        }
 
         int valor = calcular_fibonacci(&sequencia_fibonacci, &termos_totais, posicao);
         printf("O %dº termo na sequência de Fibonacci é %d\n\n", posicao, valor);
