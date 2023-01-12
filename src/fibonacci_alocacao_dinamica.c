@@ -9,7 +9,13 @@ void limpar_entrada_padrao() {
 int calcular_fibonacci(int **sequencia_fibonacci, int *termos_totais, int posicao) {
     if (posicao > *termos_totais) {
         int novo_tamanho_memoria = posicao * sizeof(int);
-        *sequencia_fibonacci = (int *)realloc(*sequencia_fibonacci, novo_tamanho_memoria);
+        int *nova_sequencia_fibonacci = (int *)realloc(*sequencia_fibonacci, novo_tamanho_memoria);
+        if (nova_sequencia_fibonacci == NULL) {
+            puts("Erro ao realocar memória!");
+            free(*sequencia_fibonacci);
+            exit(1);
+        }
+        *sequencia_fibonacci = nova_sequencia_fibonacci;
 
         for (int i = *termos_totais; i < posicao; i++) {
             (*sequencia_fibonacci)[i] =
@@ -24,6 +30,10 @@ int calcular_fibonacci(int **sequencia_fibonacci, int *termos_totais, int posica
 int main() {
     int posicao = 0, termos_totais = 2;
     int *sequencia_fibonacci = (int *)malloc(termos_totais * sizeof(int));
+    if (sequencia_fibonacci == NULL) {
+        puts("Erro ao alocar memória!");
+        return 1;
+    }
     sequencia_fibonacci[0] = 0;
     sequencia_fibonacci[1] = 1;
 
@@ -48,6 +58,7 @@ int main() {
         printf("O %dº termo na sequência de Fibonacci é %d\n\n", posicao, valor);
     } while (posicao > 0);
 
+    free(sequencia_fibonacci);
     puts("\nPrograma encerrado.");
     return 0;
 }
