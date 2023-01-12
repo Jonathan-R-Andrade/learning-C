@@ -1,47 +1,46 @@
 #include <stdio.h>
-#define DIM 5
+#define TAMANHO_DO_VETOR 5
 
-void receber(int original[]) {
-    int count = 1;
-    for (count = 0; count < DIM; count++) {
-        printf("Informe o valor %d: ", count+1);
-        scanf("%d", &original[count]);
+void preencher_vetor(int vetor[]) {
+    for (int i = 0; i < TAMANHO_DO_VETOR; i++) {
+        printf("Informe o valor %d: ", i + 1);
+        scanf("%d", &vetor[i]);
     }
 }
 
-void copiar(int copiado[], int original[]) {
-    for (int coluna = 0; coluna < DIM; coluna++) {
-        copiado[coluna] = original[coluna];
+void copiar_vetor(int origem[], int destino[]) {
+    for (int i = 0; i < TAMANHO_DO_VETOR; i++) {
+        destino[i] = origem[i];
     }
 }
 
-void dobrar(int dobrar[], int original[]) {
-    for (int coluna = 0; coluna < DIM; coluna++) {
-        dobrar[coluna] = original[coluna] * 2;
+void dobrar_valores(int origem[], int destino[]) {
+    for (int i = 0; i < TAMANHO_DO_VETOR; i++) {
+        destino[i] = origem[i] * 2;
     }
 }
 
-void exibir(int vetor[]) {
-    for (int coluna = 0; coluna < DIM; coluna++) {
-        printf("%3d", vetor[coluna]);
+void imprimir_vetor(int vetor[]) {
+    for (int i = 0; i < TAMANHO_DO_VETOR; i++) {
+        if (i > 0) printf(" ");
+        printf("%5d", vetor[i]);
     }
     printf("\n");
 }
 
 int main() {
+    int original[TAMANHO_DO_VETOR];
+    int copia[TAMANHO_DO_VETOR];
+    int dobrado[TAMANHO_DO_VETOR];
 
-    int original[DIM];
-    int copia[DIM];
-    int dobrado[DIM];
-
-    receber(original);
-    copiar(copia, original);
-    dobrar(dobrado, original);
+    preencher_vetor(original);
+    copiar_vetor(original, copia);
+    dobrar_valores(original, dobrado);
 
     printf("\nVetor original: ");
-    exibir(original);
+    imprimir_vetor(original);
     printf("Vetor copiado : ");
-    exibir(copia);
+    imprimir_vetor(copia);
     printf("Vetor dobrado : ");
-    exibir(dobrado);
+    imprimir_vetor(dobrado);
 }
