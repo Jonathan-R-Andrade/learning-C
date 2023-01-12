@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
 
 int delta(int a, int b, int c) {
     return pow(b, 2) - (4 * a * c);
@@ -17,13 +17,13 @@ void equacao2grau(int a, int b, int c) {
     if (a != 0) {
         int d = delta(a, b, c);
         if (d < 0) {
-            printf("Essa equacao nao possui raiz real.");
+            printf("Essa equação não possui raiz real.");
         } else {
             printf("Raiz 1 = %d", raiz1(d, a, b));
             printf("\nRaiz 2 = %d", raiz2(d, a, b));
         }
     } else {
-        printf("Essa equacao nao e valida");
+        printf("Essa equação não é válida.");
     }
 }
 
