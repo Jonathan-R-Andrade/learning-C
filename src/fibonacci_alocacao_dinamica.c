@@ -1,15 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Posição do último termo da sequência de Fibonacci que é possível calcular com 64 bits
+#define ULTIMO_TERMO 94
+
 void limpar_entrada_padrao() {
     char c;
     while ((c = getchar()) != '\n' && c != EOF) {};
 }
 
-int calcular_fibonacci(int **sequencia_fibonacci, int *termos_totais, int posicao) {
+unsigned long long int calcular_fibonacci(unsigned long long int **sequencia_fibonacci,
+                                          int *termos_totais, int posicao) {
     if (posicao > *termos_totais) {
-        int novo_tamanho_memoria = posicao * sizeof(int);
-        int *nova_sequencia_fibonacci = (int *)realloc(*sequencia_fibonacci, novo_tamanho_memoria);
+        int novo_tamanho_memoria = posicao * sizeof(unsigned long long int);
+        unsigned long long int *nova_sequencia_fibonacci =
+            (unsigned long long int *)realloc(*sequencia_fibonacci, novo_tamanho_memoria);
         if (nova_sequencia_fibonacci == NULL) {
             puts("Erro ao realocar memória!");
             free(*sequencia_fibonacci);
@@ -28,8 +33,11 @@ int calcular_fibonacci(int **sequencia_fibonacci, int *termos_totais, int posica
 }
 
 int main() {
-    int posicao = 0, termos_totais = 2;
-    int *sequencia_fibonacci = (int *)malloc(termos_totais * sizeof(int));
+    int termos_totais = 2;
+    int tamanho_memoria = termos_totais * sizeof(unsigned long long int);
+    unsigned long long int *sequencia_fibonacci;
+
+    sequencia_fibonacci = (unsigned long long int *)malloc(tamanho_memoria);
     if (sequencia_fibonacci == NULL) {
         puts("Erro ao alocar memória!");
         return 1;
@@ -38,25 +46,27 @@ int main() {
     sequencia_fibonacci[1] = 1;
 
     puts("Sequência de Fibonacci");
-    puts("Digite a posição do termo que você quer ver ou 0 para encerrar.\n");
+    printf(
+        "Digite a posição do termo que você quer ver de 1 a %d "
+        "ou 0 para encerrar.\n\n",
+        ULTIMO_TERMO);
 
-    do {
+    int posicao;
+    while (posicao != 0) {
         posicao = -1;
         printf("Digite a posição do termo: ");
         scanf("%d", &posicao);
         limpar_entrada_padrao();
 
-        if (posicao < 0) {
+        if (posicao < 0 || posicao > ULTIMO_TERMO) {
             puts("Posição incorreta.\n");
-            posicao = 1;
             continue;
-        } else if (posicao == 0) {
-            break;
+        } else if (posicao > 0) {
+            unsigned long long int valor =
+                calcular_fibonacci(&sequencia_fibonacci, &termos_totais, posicao);
+            printf("O %dº termo na sequência de Fibonacci é %llu\n\n", posicao, valor);
         }
-
-        int valor = calcular_fibonacci(&sequencia_fibonacci, &termos_totais, posicao);
-        printf("O %dº termo na sequência de Fibonacci é %d\n\n", posicao, valor);
-    } while (posicao > 0);
+    }
 
     free(sequencia_fibonacci);
     puts("\nPrograma encerrado.");
