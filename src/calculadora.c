@@ -1,47 +1,62 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+void limpar_entrada_padrao() {
+    char c;
+    while ((c = getchar()) != '\n' && c != EOF) {};
+}
+
+void obter_numeros(double *numero_1, double *numero_2) {
+    printf("\nInforme o primeiro número: ");
+    scanf(" %lf", numero_1);
+    limpar_entrada_padrao();
+
+    printf("Informe o segundo número: ");
+    scanf(" %lf", numero_2);
+    limpar_entrada_padrao();
+}
 
 int main() {
-
-    int operacao, n1, n2;
+    char operacao;
+    double numero_1, numero_2;
 
     do {
+        printf(
+            "Escolha uma operação:\n"
+            "0. Sair.\n"
+            "+. Somar.\n"
+            "-. Subtrair.\n"
+            "*. Multiplicar.\n"
+            "/. Dividir.\n\n");
 
-        printf("Escolha uma operacao:\n"
-                "1. Para soma.\n"
-                "2. Para subtracao.\n"
-                "3. Para multiplicacao.\n"
-                "4. Para divicao.\n");
+        printf("Operação: ");
+        scanf(" %c", &operacao);
+        limpar_entrada_padrao();
 
-        scanf("%d", &operacao);
-
-        printf("Informe o primeiro numero: ");
-        scanf("%d", &n1);
-
-        printf("Informe o segundo numero: ");
-        scanf("%d", &n2);
+        if (operacao == '0') break;
 
         switch (operacao) {
-            case 1:
-                printf("%d + %d = %d", n1, n2, (n1 + n2));
+            case '+':
+                obter_numeros(&numero_1, &numero_2);
+                printf("%g + %g = %g\n\n", numero_1, numero_2, (numero_1 + numero_2));
                 break;
-            case 2:
-                printf("%d - %d = %d", n1, n2, (n1 - n2));
+            case '-':
+                obter_numeros(&numero_1, &numero_2);
+                printf("%g - %g = %g\n\n", numero_1, numero_2, (numero_1 - numero_2));
                 break;
-            case 3:
-                printf("%d * %d = %d", n1, n2, (n1 * n2));
+            case '*':
+                obter_numeros(&numero_1, &numero_2);
+                printf("%g * %g = %g\n\n", numero_1, numero_2, (numero_1 * numero_2));
                 break;
-            case 4:
-                printf("%d / %d = %d", n1, n2, (n1 / n2));
+            case '/':
+                obter_numeros(&numero_1, &numero_2);
+                printf("%g / %g = %g\n\n", numero_1, numero_2, (numero_1 / numero_2));
                 break;
+            default:
+                puts("Operação inválida.\n");
         }
+    } while (operacao != '0');
 
-        printf("\nVoce deseja fazer outra conta:\n"
-                "0. Nao.\n"
-                "1. Sim.\n");
-        scanf("%d", &operacao);
-
-        if (operacao == 1)
-            system("clear || cls");
-
-    } while (operacao);
+    puts("\nPrograma encerrado.");
+    return 0;
 }
