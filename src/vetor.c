@@ -23,7 +23,7 @@ void dobrar_valores(int origem[], int destino[]) {
 void imprimir_vetor(int vetor[]) {
     for (int i = 0; i < TAMANHO_DO_VETOR; i++) {
         if (i > 0) printf(" ");
-        printf("%5d", vetor[i]);
+        printf("%d", vetor[i]);
     }
     printf("\n");
 }
@@ -37,10 +37,18 @@ int main() {
     copiar_vetor(original, copia);
     dobrar_valores(original, dobrado);
 
-    printf("\nVetor original: ");
+    printf("\nVetor original:\n");
+    printf("Valores: ");
     imprimir_vetor(original);
-    printf("Vetor copiado : ");
+    printf("Ponteiro = %p\n\n", original);
+
+    printf("Vetor copiado:\n");
+    printf("Valores: ");
     imprimir_vetor(copia);
-    printf("Vetor dobrado : ");
+    printf("Ponteiro = %p\n\n", copia);
+
+    printf("Vetor dobrado:\n");
+    printf("Valores: ");
     imprimir_vetor(dobrado);
+    printf("Ponteiro = %p\n", dobrado);
 }
