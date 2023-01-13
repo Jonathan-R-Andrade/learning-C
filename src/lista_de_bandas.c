@@ -24,15 +24,15 @@ void preenche_bandas(banda vetor[5]) {
         scanf(" %20[^\n]", vetor[i].nome);
         limpar_entrada_padrao();
 
-        printf("Informe o genero da banda (máximo 20 caracteres): ");
+        printf("Informe o gênero da banda (máximo 20 caracteres): ");
         scanf(" %20[^\n]", vetor[i].genero);
         limpar_entrada_padrao();
 
-        printf("Informe o numero de integrantes da banda: ");
+        printf("Informe o número de integrantes da banda: ");
         scanf(" %d", &vetor[i].integrantes);
         limpar_entrada_padrao();
 
-        printf("Em qual posicao essa banda esta entre 1 e 5: ");
+        printf("Classifique a banda entre 1 e 5: ");
         scanf(" %d", &vetor[i].classificacao);
         limpar_entrada_padrao();
 
@@ -42,9 +42,9 @@ void preenche_bandas(banda vetor[5]) {
 
 void imprimir_banda(banda banda) {
     printf("Nome da banda: %s\n", banda.nome);
-    printf("Genero da banda: %s\n", banda.genero);
+    printf("Gênero da banda: %s\n", banda.genero);
     printf("Total de integrantes da banda: %d\n", banda.integrantes);
-    printf("Classificacao: %d\n\n", banda.classificacao);
+    printf("Classificação: %d\n\n", banda.classificacao);
 }
 
 void imprimir_bandas(banda bandas[5]) {
@@ -55,10 +55,10 @@ void imprimir_bandas(banda bandas[5]) {
 }
 
 void imprimir_bandas_por_classificacao(banda bandas[5]) {
-    printf("Lista das suas bandas favoritas por classificacao:\n\n");
+    printf("Lista das suas bandas favoritas por classificação:\n\n");
 
     int posicao = -1, banda_encontrada = 0;
-    printf("Informe a posicao da banda: ");
+    printf("Informe a classificação da banda: ");
     scanf(" %d", &posicao);
     limpar_entrada_padrao();
     printf("\n");
@@ -76,11 +76,11 @@ void imprimir_bandas_por_classificacao(banda bandas[5]) {
 }
 
 void imprimir_bandas_por_genero(banda bandas[5]) {
-    printf("Lista das suas bandas favoritas por genero:\n\n");
+    printf("Lista das suas bandas favoritas por gênero:\n\n");
 
     int banda_encontrada = 0;
     char genero[21];
-    printf("Informe o genero da banda: ");
+    printf("Informe o gênero da banda: ");
     scanf(" %20[^\n]", genero);
     limpar_entrada_padrao();
     printf("\n");
@@ -118,13 +118,13 @@ void verificar_banda_favorita(banda bandas[5]) {
 
 int menu() {
     printf(
-        "        Escolha um opcao.\n"
-        "0 para sair.\n"
-        "1 para preencher a lista de bandas.\n"
-        "2 para exibir a lista de bandas.\n"
-        "3 para exibir uma banda por classificacao.\n"
-        "4 para exibir uma banda por genero.\n"
-        "5 para saber se uma banda e favorita.\n\n");
+        "Escolha um opção.\n"
+        "0 - Sair.\n"
+        "1 - Preencher a lista de bandas.\n"
+        "2 - Exibir a lista de bandas.\n"
+        "3 - Exibir a lista de bandas por classificação.\n"
+        "4 - Exibir a lista de bandas por gênero.\n"
+        "5 - Verificar se uma banda está na lista.\n\n");
 
     while (1) {
         int opcao = -1;
@@ -150,7 +150,7 @@ int main() {
         if (opcao > 1 && !bandas_adicionadas) {
             limpar_terminal();
             printf(
-                "Opção indisponivel. "
+                "Opção indisponível. "
                 "Primeiro preencha a lista de bandas selecionando a opção 1.\n\n");
             continue;
         }
