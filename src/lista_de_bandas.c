@@ -166,6 +166,6 @@ int main() {
         }
     } while (opcao != 0);
 
-    printf("Programa encerrado.\n");
+    printf("\nPrograma encerrado.\n\n");
     return 0;
 }
