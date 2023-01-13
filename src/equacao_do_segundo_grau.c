@@ -21,8 +21,8 @@ void calcular_equacao_2_grau(int a, int b, int c) {
         } else if (delta == 0) {
             printf("x = %g\n", calcular_raiz_1(delta, a, b));
         } else {
-            printf("x = %g\n", calcular_raiz_1(delta, a, b));
-            printf("x = %g\n", calcular_raiz_2(delta, a, b));
+            printf("x1 = %g\n", calcular_raiz_1(delta, a, b));
+            printf("x2 = %g\n", calcular_raiz_2(delta, a, b));
         }
     } else {
         printf("Essa equação não é do 2º grau. O coeficiente \"a\" não pode ser 0.\n");
