@@ -3,23 +3,34 @@
 #include <string.h>
 
 typedef struct banda {
-    char nome[30];
-    char genero[15];
+    char nome[21];
+    char genero[21];
     int integrantes, classificacao;
 } banda;
 
+void limpar_entrada_padrao() {
+    char c;
+    while ((c = getchar()) != '\n' && c != EOF) {};
+}
+
 void preenche(banda vetor[]) {
-    int i;
-    for (i = 0; i < 5; i++) {
-        fflush(stdin);
-        printf("Informe o nome da banda: ");
-        gets(vetor[i].nome);
-        printf("Informe o genero da banda: ");
-        gets(vetor[i].genero);
-        printf("Informe o numero de integrantes da banda: ");
+    for (int i = 0; i < 5; i++) {
+        printf("%d - Informe o nome da banda (máximo 20 caracteres): ", i + 1);
+        scanf(" %20[^\n]", vetor[i].nome);
+        limpar_entrada_padrao();
+
+        printf("%d - Informe o genero da banda (máximo 20 caracteres): ", i + 1);
+        scanf(" %20[^\n]", vetor[i].genero);
+        limpar_entrada_padrao();
+
+        printf("%d - Informe o numero de integrantes da banda: ", i + 1);
         scanf(" %d", &vetor[i].integrantes);
-        printf("Em qual posicao essa banda esta entre 1 e 5: ");
+        limpar_entrada_padrao();
+
+        printf("%d - Em qual posicao essa banda esta entre 1 e 5: ", i + 1);
         scanf(" %d", &vetor[i].classificacao);
+        limpar_entrada_padrao();
+
         printf("\n");
     }
 }
@@ -51,7 +62,7 @@ void exibec(banda vetor[]) {
 
 void exibeg(banda vetor[]) {
     int i;
-    char genero[15];
+    char genero[21];
     printf("Informe o genero da banda: ");
     fflush(stdin);
     gets(genero);
@@ -68,7 +79,7 @@ void exibeg(banda vetor[]) {
 
 void favorita(banda vetor[]) {
     int i, b = 0;
-    char nome[20];
+    char nome[21];
     printf("Informe o nome de uma banda: ");
     fflush(stdin);
     gets(nome);
