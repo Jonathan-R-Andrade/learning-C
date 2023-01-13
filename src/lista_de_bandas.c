@@ -48,14 +48,14 @@ void imprimir_banda(banda banda) {
 }
 
 void imprimir_bandas(banda bandas[5]) {
-    printf("Lista das suas bandas favoritas:\n\n");
+    printf("Lista das bandas:\n\n");
     for (int i = 0; i < 5; i++) {
         imprimir_banda(bandas[i]);
     }
 }
 
 void imprimir_bandas_por_classificacao(banda bandas[5]) {
-    printf("Lista das suas bandas favoritas por classificação:\n\n");
+    printf("Lista das bandas por classificação:\n\n");
 
     int posicao = -1, banda_encontrada = 0;
     printf("Informe a classificação da banda: ");
@@ -76,7 +76,7 @@ void imprimir_bandas_por_classificacao(banda bandas[5]) {
 }
 
 void imprimir_bandas_por_genero(banda bandas[5]) {
-    printf("Lista das suas bandas favoritas por gênero:\n\n");
+    printf("Lista das bandas por gênero:\n\n");
 
     int banda_encontrada = 0;
     char genero[21];
@@ -97,7 +97,7 @@ void imprimir_bandas_por_genero(banda bandas[5]) {
     }
 }
 
-void verificar_banda_favorita(banda bandas[5]) {
+void procurar_banda_na_lista(banda bandas[5]) {
     printf("Verificar se uma banda está na lista.\n\n");
 
     char nome[21];
@@ -108,12 +108,13 @@ void verificar_banda_favorita(banda bandas[5]) {
 
     for (int i = 0; i < 5; i++) {
         if (strcmp(bandas[i].nome, nome) == 0) {
-            printf("A banda %s está entre as favoritas.\n\n", nome);
+            printf("A banda %s está na lista.\n\n", nome);
+            imprimir_banda(bandas[i]);
             return;
         }
     }
 
-    printf("A banda %s não está entre as favoritas.\n\n", nome);
+    printf("A banda %s não está na lista.\n\n", nome);
 }
 
 int menu() {
@@ -171,7 +172,7 @@ int main() {
                 imprimir_bandas_por_genero(bandas);
                 break;
             case 5:
-                verificar_banda_favorita(bandas);
+                procurar_banda_na_lista(bandas);
                 break;
         }
     } while (opcao != 0);
