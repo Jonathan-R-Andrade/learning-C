@@ -97,12 +97,14 @@ void verificar_banda_favorita(banda bandas[5]) {
     scanf(" %20[^\n]", nome);
     limpar_entrada_padrao();
     printf("\n");
+
     for (int i = 0; i < 5; i++) {
         if (strcmp(bandas[i].nome, nome) == 0) {
             printf("A banda %s esta entre as favoritas.\n\n", nome);
             return;
         }
     }
+
     printf("A banda %s nao esta entre as favoritas.\n\n", nome);
 }
 
