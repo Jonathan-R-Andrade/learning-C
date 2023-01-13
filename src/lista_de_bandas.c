@@ -18,20 +18,21 @@ void limpar_terminal() {
 }
 
 void preenche_bandas(banda vetor[5]) {
+    printf("Adicione as suas 5 bandas favoritas.\n\n");
     for (int i = 0; i < 5; i++) {
-        printf("%d - Informe o nome da banda (máximo 20 caracteres): ", i + 1);
+        printf("Informe o nome da banda (máximo 20 caracteres): ");
         scanf(" %20[^\n]", vetor[i].nome);
         limpar_entrada_padrao();
 
-        printf("%d - Informe o genero da banda (máximo 20 caracteres): ", i + 1);
+        printf("Informe o genero da banda (máximo 20 caracteres): ");
         scanf(" %20[^\n]", vetor[i].genero);
         limpar_entrada_padrao();
 
-        printf("%d - Informe o numero de integrantes da banda: ", i + 1);
+        printf("Informe o numero de integrantes da banda: ");
         scanf(" %d", &vetor[i].integrantes);
         limpar_entrada_padrao();
 
-        printf("%d - Em qual posicao essa banda esta entre 1 e 5: ", i + 1);
+        printf("Em qual posicao essa banda esta entre 1 e 5: ");
         scanf(" %d", &vetor[i].classificacao);
         limpar_entrada_padrao();
 
@@ -47,12 +48,15 @@ void imprimir_banda(banda banda) {
 }
 
 void imprimir_bandas(banda bandas[5]) {
+    printf("Lista das suas bandas favoritas:\n\n");
     for (int i = 0; i < 5; i++) {
         imprimir_banda(bandas[i]);
     }
 }
 
 void imprimir_bandas_por_classificacao(banda bandas[5]) {
+    printf("Lista das suas bandas favoritas por classificacao:\n\n");
+
     int posicao = -1, banda_encontrada = 0;
     printf("Informe a posicao da banda: ");
     scanf(" %d", &posicao);
@@ -72,6 +76,8 @@ void imprimir_bandas_por_classificacao(banda bandas[5]) {
 }
 
 void imprimir_bandas_por_genero(banda bandas[5]) {
+    printf("Lista das suas bandas favoritas por genero:\n\n");
+
     int banda_encontrada = 0;
     char genero[21];
     printf("Informe o genero da banda: ");
@@ -92,20 +98,22 @@ void imprimir_bandas_por_genero(banda bandas[5]) {
 }
 
 void verificar_banda_favorita(banda bandas[5]) {
+    printf("Verificar se uma banda está na lista.\n\n");
+
     char nome[21];
-    printf("Informe o nome de uma banda: ");
+    printf("Informe o nome da banda: ");
     scanf(" %20[^\n]", nome);
     limpar_entrada_padrao();
     printf("\n");
 
     for (int i = 0; i < 5; i++) {
         if (strcmp(bandas[i].nome, nome) == 0) {
-            printf("A banda %s esta entre as favoritas.\n\n", nome);
+            printf("A banda %s está entre as favoritas.\n\n", nome);
             return;
         }
     }
 
-    printf("A banda %s nao esta entre as favoritas.\n\n", nome);
+    printf("A banda %s não está entre as favoritas.\n\n", nome);
 }
 
 int menu() {
