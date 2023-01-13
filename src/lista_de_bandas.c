@@ -53,28 +53,41 @@ void imprimir_bandas(banda bandas[5]) {
 }
 
 void imprimir_bandas_por_classificacao(banda bandas[5]) {
-    int posicao;
+    int posicao = -1, banda_encontrada = 0;
     printf("Informe a posicao da banda: ");
     scanf(" %d", &posicao);
     limpar_entrada_padrao();
     printf("\n");
+
     for (int i = 0; i < 5; i++) {
         if (bandas[i].classificacao == posicao) {
             imprimir_banda(bandas[i]);
+            banda_encontrada = 1;
         }
+    }
+
+    if (!banda_encontrada) {
+        printf("Nenhuma banda foi encontrada.\n\n");
     }
 }
 
 void imprimir_bandas_por_genero(banda bandas[5]) {
+    int banda_encontrada = 0;
     char genero[21];
     printf("Informe o genero da banda: ");
     scanf(" %20[^\n]", genero);
     limpar_entrada_padrao();
     printf("\n");
+
     for (int i = 0; i < 5; i++) {
         if (strcmp(bandas[i].genero, genero) == 0) {
             imprimir_banda(bandas[i]);
+            banda_encontrada = 1;
         }
+    }
+
+    if (!banda_encontrada) {
+        printf("Nenhuma banda foi encontrada.\n\n");
     }
 }
 
@@ -118,14 +131,25 @@ int menu() {
 
 int main() {
     banda bandas[5];
+    int bandas_adicionadas = 0;
 
     int opcao;
     do {
         opcao = menu();
+
+        if (opcao > 1 && !bandas_adicionadas) {
+            limpar_terminal();
+            printf(
+                "Opção indisponivel. "
+                "Primeiro preencha a lista de bandas selecionando a opção 1.\n\n");
+            continue;
+        }
+
         limpar_terminal();
         switch (opcao) {
             case 1:
                 preenche_bandas(bandas);
+                bandas_adicionadas = 1;
                 break;
             case 2:
                 imprimir_bandas(bandas);
