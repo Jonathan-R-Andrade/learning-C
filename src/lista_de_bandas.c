@@ -93,23 +93,37 @@ void verificar_banda_favorita(banda bandas[5]) {
     printf("A banda %s nao esta entre as favoritas.\n\n", nome);
 }
 
-void menu(banda bandas[5]) {
+int menu() {
+    printf(
+        "        Escolha um opcao.\n"
+        "0 para sair.\n"
+        "1 para preencher a lista de bandas.\n"
+        "2 para exibir a lista de bandas.\n"
+        "3 para exibir uma banda por classificacao.\n"
+        "4 para exibir uma banda por genero.\n"
+        "5 para saber se uma banda e favorita.\n\n");
+
+    while (1) {
+        int opcao = -1;
+        printf("Opção: ");
+        scanf(" %d", &opcao);
+        limpar_entrada_padrao();
+
+        if (opcao >= 0 && opcao <= 5)
+            return opcao;
+        else
+            printf("Opção inválida.\n\n");
+    }
+}
+
+int main() {
+    banda bandas[5];
+
     int opcao;
     do {
-        printf(
-            "        Escolha um opcao.\n"
-            "0 para sair.\n"
-            "1 para preencher a lista de bandas.\n"
-            "2 para exibir a lista de bandas.\n"
-            "3 para exibir uma banda por classificacao.\n"
-            "4 para exibir uma banda por genero.\n"
-            "5 para saber se uma banda e favorita.\n"
-            "Opcao: ");
-        scanf("%d", &opcao);
-        printf("\n");
+        opcao = menu();
+        limpar_terminal();
         switch (opcao) {
-            case 0:
-                break;
             case 1:
                 preenche_bandas(bandas);
                 break;
@@ -125,15 +139,9 @@ void menu(banda bandas[5]) {
             case 5:
                 verificar_banda_favorita(bandas);
                 break;
-            default:
-                limpar_terminal();
-                printf("Por favor informe uma opcao valida.\n\n");
         }
-    } while (opcao);
-}
+    } while (opcao != 0);
 
-int main() {
-    banda bandas[5];
-    menu(bandas);
+    printf("Programa encerrado.\n");
     return 0;
 }
