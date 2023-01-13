@@ -13,7 +13,11 @@ void limpar_entrada_padrao() {
     while ((c = getchar()) != '\n' && c != EOF) {};
 }
 
-void preenche(banda vetor[]) {
+void limpar_terminal() {
+    system("clear || cls");
+}
+
+void preenche_bandas(banda vetor[5]) {
     for (int i = 0; i < 5; i++) {
         printf("%d - Informe o nome da banda (máximo 20 caracteres): ", i + 1);
         scanf(" %20[^\n]", vetor[i].nome);
@@ -35,67 +39,61 @@ void preenche(banda vetor[]) {
     }
 }
 
-void exibe(banda *vetor) {
-    int i;
-    for (i = 0; i < 5; i++) {
-        printf("Nome da banda: %s\n", vetor[i].nome);
-        printf("Genero da banda: %s\n", vetor[i].genero);
-        printf("Total de integrantes da banda: %d\n", vetor[i].integrantes);
-        printf("Classificacao: %d\n\n", vetor[i].classificacao);
+void imprimir_banda(banda banda) {
+    printf("Nome da banda: %s\n", banda.nome);
+    printf("Genero da banda: %s\n", banda.genero);
+    printf("Total de integrantes da banda: %d\n", banda.integrantes);
+    printf("Classificacao: %d\n\n", banda.classificacao);
+}
+
+void imprimir_bandas(banda bandas[5]) {
+    for (int i = 0; i < 5; i++) {
+        imprimir_banda(bandas[i]);
     }
 }
 
-void exibec(banda vetor[]) {
-    int i, posicao;
+void imprimir_bandas_por_classificacao(banda bandas[5]) {
+    int posicao;
     printf("Informe a posicao da banda: ");
-    scanf("%d", &posicao);
+    scanf(" %d", &posicao);
+    limpar_entrada_padrao();
     printf("\n");
-    for (i = 0; i < 5; i++) {
-        if (vetor[i].classificacao == posicao) {
-            printf("Nome da banda: %s\n", vetor[i].nome);
-            printf("Genero da banda: %s\n", vetor[i].genero);
-            printf("Total de integrantes da banda: %d\n", vetor[i].integrantes);
-            printf("Classificacao: %d\n\n", vetor[i].classificacao);
+    for (int i = 0; i < 5; i++) {
+        if (bandas[i].classificacao == posicao) {
+            imprimir_banda(bandas[i]);
         }
     }
 }
 
-void exibeg(banda vetor[]) {
-    int i;
+void imprimir_bandas_por_genero(banda bandas[5]) {
     char genero[21];
     printf("Informe o genero da banda: ");
-    fflush(stdin);
-    gets(genero);
+    scanf(" %20[^\n]", genero);
+    limpar_entrada_padrao();
     printf("\n");
-    for (i = 0; i < 5; i++) {
-        if (strcmp(vetor[i].genero, genero) == 0) {
-            printf("Nome da banda: %s\n", vetor[i].nome);
-            printf("Genero da banda: %s\n", vetor[i].genero);
-            printf("Total de integrantes da banda: %d\n", vetor[i].integrantes);
-            printf("Classificacao: %d\n\n", vetor[i].classificacao);
+    for (int i = 0; i < 5; i++) {
+        if (strcmp(bandas[i].genero, genero) == 0) {
+            imprimir_banda(bandas[i]);
         }
     }
 }
 
-void favorita(banda vetor[]) {
-    int i, b = 0;
+void verificar_banda_favorita(banda bandas[5]) {
     char nome[21];
     printf("Informe o nome de uma banda: ");
-    fflush(stdin);
-    gets(nome);
+    scanf(" %20[^\n]", nome);
+    limpar_entrada_padrao();
     printf("\n");
-    for (i = 0; i < 5; i++) {
-        if (strcmp(vetor[i].nome, nome) == 0) {
-            printf("A banda %s esta entre as minhas favoritas.\n\n", nome);
-            b = 1;
+    for (int i = 0; i < 5; i++) {
+        if (strcmp(bandas[i].nome, nome) == 0) {
+            printf("A banda %s esta entre as favoritas.\n\n", nome);
+            return;
         }
     }
-    if (b == 0) {
-        printf("A banda %s nao esta entre as minhas favoritas.\n\n", nome);
-    }
+    printf("A banda %s nao esta entre as favoritas.\n\n", nome);
 }
 
-void menu(banda vetor[]) {
+void menu(banda bandas[5]) {
     int opcao;
     do {
         printf(
@@ -113,29 +111,29 @@ void menu(banda vetor[]) {
             case 0:
                 break;
             case 1:
-                preenche(vetor);
+                preenche_bandas(bandas);
                 break;
             case 2:
-                exibe(vetor);
+                imprimir_bandas(bandas);
                 break;
             case 3:
-                exibec(vetor);
+                imprimir_bandas_por_classificacao(bandas);
                 break;
             case 4:
-                exibeg(vetor);
+                imprimir_bandas_por_genero(bandas);
                 break;
             case 5:
-                favorita(vetor);
+                verificar_banda_favorita(bandas);
                 break;
             default:
-                system("clear || cls");
+                limpar_terminal();
                 printf("Por favor informe uma opcao valida.\n\n");
         }
     } while (opcao);
 }
 
-int main(void) {
-    banda vetor[2];
-    menu(vetor);
+int main() {
+    banda bandas[5];
+    menu(bandas);
     return 0;
 }
