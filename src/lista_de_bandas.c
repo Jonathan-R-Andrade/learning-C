@@ -142,7 +142,7 @@ int menu() {
     }
 }
 
-int main() {
+void iniciar() {
     banda bandas[BANDAS_TOTAIS];
     int bandas_adicionadas = 0;
 
@@ -178,7 +178,10 @@ int main() {
                 break;
         }
     } while (opcao != 0);
+}
 
+int main() {
+    iniciar();
     printf("\nPrograma encerrado.\n\n");
     return 0;
 }
