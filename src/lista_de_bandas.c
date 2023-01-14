@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define BANDAS_TOTAIS 5
+
 typedef struct banda {
     char nome[21];
     char genero[21];
@@ -17,9 +19,9 @@ void limpar_terminal() {
     system("clear || cls");
 }
 
-void preenche_bandas(banda vetor[5]) {
-    printf("Adicione as suas 5 bandas favoritas.\n\n");
-    for (int i = 0; i < 5; i++) {
+void preenche_bandas(banda vetor[BANDAS_TOTAIS]) {
+    printf("Adicione as suas %d bandas favoritas.\n\n", BANDAS_TOTAIS);
+    for (int i = 0; i < BANDAS_TOTAIS; i++) {
         printf("Informe o nome da banda (máximo 20 caracteres): ");
         scanf(" %20[^\n]", vetor[i].nome);
         limpar_entrada_padrao();
@@ -32,7 +34,7 @@ void preenche_bandas(banda vetor[5]) {
         scanf(" %d", &vetor[i].integrantes);
         limpar_entrada_padrao();
 
-        printf("Classifique a banda entre 1 e 5: ");
+        printf("Classifique a banda entre 1 e %d: ", BANDAS_TOTAIS);
         scanf(" %d", &vetor[i].classificacao);
         limpar_entrada_padrao();
 
@@ -47,14 +49,14 @@ void imprimir_banda(banda banda) {
     printf("Classificação: %d\n\n", banda.classificacao);
 }
 
-void imprimir_bandas(banda bandas[5]) {
+void imprimir_bandas(banda bandas[BANDAS_TOTAIS]) {
     printf("Lista das bandas:\n\n");
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < BANDAS_TOTAIS; i++) {
         imprimir_banda(bandas[i]);
     }
 }
 
-void imprimir_bandas_por_classificacao(banda bandas[5]) {
+void imprimir_bandas_por_classificacao(banda bandas[BANDAS_TOTAIS]) {
     printf("Lista das bandas por classificação:\n\n");
 
     int posicao = -1, banda_encontrada = 0;
@@ -63,7 +65,7 @@ void imprimir_bandas_por_classificacao(banda bandas[5]) {
     limpar_entrada_padrao();
     printf("\n");
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < BANDAS_TOTAIS; i++) {
         if (bandas[i].classificacao == posicao) {
             imprimir_banda(bandas[i]);
             banda_encontrada = 1;
@@ -75,7 +77,7 @@ void imprimir_bandas_por_classificacao(banda bandas[5]) {
     }
 }
 
-void imprimir_bandas_por_genero(banda bandas[5]) {
+void imprimir_bandas_por_genero(banda bandas[BANDAS_TOTAIS]) {
     printf("Lista das bandas por gênero:\n\n");
 
     int banda_encontrada = 0;
@@ -85,7 +87,7 @@ void imprimir_bandas_por_genero(banda bandas[5]) {
     limpar_entrada_padrao();
     printf("\n");
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < BANDAS_TOTAIS; i++) {
         if (strcmp(bandas[i].genero, genero) == 0) {
             imprimir_banda(bandas[i]);
             banda_encontrada = 1;
@@ -97,7 +99,7 @@ void imprimir_bandas_por_genero(banda bandas[5]) {
     }
 }
 
-void procurar_banda_na_lista(banda bandas[5]) {
+void procurar_banda_na_lista(banda bandas[BANDAS_TOTAIS]) {
     printf("Verificar se uma banda está na lista.\n\n");
 
     char nome[21];
@@ -106,7 +108,7 @@ void procurar_banda_na_lista(banda bandas[5]) {
     limpar_entrada_padrao();
     printf("\n");
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < BANDAS_TOTAIS; i++) {
         if (strcmp(bandas[i].nome, nome) == 0) {
             printf("A banda %s está na lista.\n\n", nome);
             imprimir_banda(bandas[i]);
@@ -141,7 +143,7 @@ int menu() {
 }
 
 int main() {
-    banda bandas[5];
+    banda bandas[BANDAS_TOTAIS];
     int bandas_adicionadas = 0;
 
     int opcao;
@@ -152,7 +154,7 @@ int main() {
             limpar_terminal();
             printf(
                 "Opção indisponível. "
-                "Primeiro preencha a lista de bandas selecionando a opção 1.\n\n");
+                "Selecione a opção 1 para preencher a lista de bandas.\n\n");
             continue;
         }
 
