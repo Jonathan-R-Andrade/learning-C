@@ -2,8 +2,9 @@
 #define TAMANHO_DO_VETOR 5
 
 void preencher_vetor(int vetor[]) {
+    printf("Adicione %d inteiros no vetor.\n\n", TAMANHO_DO_VETOR);
     for (int i = 0; i < TAMANHO_DO_VETOR; i++) {
-        printf("Informe o valor %d: ", i + 1);
+        printf("Adicione o %dº inteiro: ", i + 1);
         scanf("%d", &vetor[i]);
     }
 }
